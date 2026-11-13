@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import type { Obligation, Risk } from "@/lib/types";
+import type { GlossaryTerm, Obligation, Risk } from "@/lib/types";
 import ObligationCard from "./ObligationCard";
 import ReminderForm from "./ReminderForm";
 
@@ -24,10 +24,14 @@ export default function Timeline({
   obligations,
   programId,
   programName,
+  glossary,
+  docUrl,
 }: {
   obligations: Obligation[];
   programId: string;
   programName: string;
+  glossary?: GlossaryTerm[];
+  docUrl: string;
 }) {
   const [query, setQuery] = useState("");
   const shown = obligations
@@ -55,7 +59,7 @@ export default function Timeline({
         <ol className="flex flex-col gap-4">
           {shown.map((o) => (
             <li key={o.id} id={o.id} className="scroll-mt-4">
-              <ObligationCard obligation={o} programId={programId} programName={programName} />
+              <ObligationCard obligation={o} programId={programId} programName={programName} glossary={glossary} docUrl={docUrl} />
             </li>
           ))}
         </ol>

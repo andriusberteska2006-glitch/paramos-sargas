@@ -61,7 +61,7 @@ export default async function ResultsPage({ searchParams }: PageProps<"/rezultat
         <Link href="/saugykla" className="text-blue-700 underline">Įrodymų saugykla</Link>
       </nav>
       <h1 className="text-2xl font-bold">{program.name}: jūsų įsipareigojimai</h1>
-      <Timeline obligations={obligations} programId={program.id} programName={program.name} />
+      <Timeline obligations={obligations} programId={program.id} programName={program.name} glossary={program.glossary} docUrl={program.sourceDocUrl} />
       <AskBox programId={program.id} />
     </main>
   );

@@ -181,5 +181,15 @@
       "source": { "document": "DEMO finansavimo sąlygų aprašas", "page": 15, "clause": "56 p." },
       "evidence": ["Lentos nuotrauka su data", "Lentos gamybos sąskaita"]
     }
+  ],
+  "glossary": [
+    { "term": "PVM", "forms": ["pvm"], "explanation": "Pridėtinės vertės mokestis (21 % prie kainos). Jei esate PVM mokėtojas, sumokėtą PVM susigrąžinate iš valstybės, todėl parama jo nedengia.", "page": 12 },
+    { "term": "Perkančioji organizacija", "forms": ["perkanči organizacij"], "explanation": "Įmonė ar įstaiga, kurią daugiausia finansuoja ar valdo valstybė arba savivaldybė. Ji privalo pirkti pagal Viešųjų pirkimų įstatymą, o ne laisvai.", "page": 9 },
+    { "term": "CVP IS", "forms": ["cvp is"], "explanation": "Centrinė viešųjų pirkimų informacinė sistema: svetainė, kurioje skelbiami ir vykdomi viešieji pirkimai.", "page": 9 },
+    { "term": "Nematerialusis turtas", "forms": ["nematerial turt"], "explanation": "Turtas, kurio negalima paliesti: programos, licencijos, patentai, prekių ženklai. Jis įrašomas į įmonės buhalteriją kaip ir įranga.", "page": 19 },
+    { "term": "Netinkamos išlaidos", "forms": ["netinkam"], "explanation": "Išlaidos, kurių parama nedengia. Jei išlaida pripažįstama netinkama, už ją gautus pinigus tenka grąžinti.", "page": 7 },
+    { "term": "Finansinė korekcija (pataisa)", "forms": ["finansin korekcij", "finansin patais"], "explanation": "Bauda už taisyklių pažeidimą: parama sumažinama tam tikru procentu arba dalį jos reikia grąžinti.", "page": 21 },
+    { "term": "Viešinimas", "forms": ["viešinim"], "explanation": "Pareiga visiems parodyti, kad projektas finansuotas ES lėšomis: ES logotipas svetainėje, dokumentuose, ant įrangos ar lentoje.", "page": 15 },
+    { "term": "Grynosios pajamos", "forms": ["gryn pajam"], "explanation": "Projekto uždirbtos pajamos atėmus jo išlaikymo išlaidas. Tiek parama gali būti sumažinta, nes dalį projekto atsipirko jis pats.", "page": 20 }
   ]
 }

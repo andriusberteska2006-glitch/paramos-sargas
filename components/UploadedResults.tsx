@@ -39,7 +39,7 @@ export default function UploadedResults() {
         {program.agency && `${program.agency}. `}Parama: {inputs.grantAmount} EUR. Sutartis pasirašyta {inputs.contractSignedDate}, projektas
         baigiasi {inputs.projectEndDate}.
       </p>
-      <Timeline obligations={computeObligations(program, inputs)} programId={program.id} programName={program.name} />
+      <Timeline obligations={computeObligations(program, inputs)} programId={program.id} programName={program.name} glossary={program.glossary} docUrl={program.sourceDocUrl} />
       <AskBox programId={program.id} program={program} />
     </>
   );

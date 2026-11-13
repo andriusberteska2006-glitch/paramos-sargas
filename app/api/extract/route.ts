@@ -133,6 +133,7 @@ export async function POST(request: Request) {
       agency: x.agency,
       sourceDocUrl: rules?.sourceDocUrl ?? "",
       obligations: [...(rules?.obligations ?? []), ...fromContract],
+      glossary: rules?.glossary,
     };
     const inputs: UserInputs = {
       programId: program.id,

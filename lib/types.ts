@@ -38,7 +38,11 @@ export type Program = {
   agency: string;
   sourceDocUrl: string;
   obligations: ObligationTemplate[];
+  glossary?: GlossaryTerm[];
 };
+
+/** Hard term explained simply. `forms` = word stems to highlight, e.g. "perkanči organizacij" (word endings vary). */
+export type GlossaryTerm = { term: string; forms: string[]; explanation: string; page: number };
 
 export type UserInputs = {
   programId: string;
