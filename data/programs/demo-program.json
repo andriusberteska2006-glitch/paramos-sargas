@@ -3,7 +3,7 @@
   "id": "demo-program",
   "name": "DEMO: Smulkaus verslo modernizavimas (pavyzdinė programa)",
   "agency": "DEMO agentūra (pavyzdys)",
-  "sourceDocUrl": "https://example.com/demo-finansavimo-salygu-aprasas.pdf",
+  "sourceDocUrl": "",
   "obligations": [
     {
       "id": "galutine-ataskaita",
@@ -59,8 +59,8 @@
     {
       "id": "viesinimas",
       "title": "Viešinti ES paramą (logotipas ir informacija)",
-      "plainExplanation": "Nuo sutarties pasirašymo savo svetainėje, dokumentuose ir prie įrangos turite rodyti ES logotipą ir nurodyti, kad projektas finansuotas ES lėšomis.",
-      "startsFrom": "contract_signed",
+      "plainExplanation": "Nuo sutarties pasirašymo iki projekto pabaigos savo svetainėje, dokumentuose ir prie įrangos turite rodyti ES logotipą ir nurodyti, kad projektas finansuotas ES lėšomis.",
+      "startsFrom": "project_end",
       "offsetMonths": 0,
       "recurring": "none",
       "risk": "medium",
@@ -74,8 +74,8 @@
     {
       "id": "pirkimai",
       "title": "Laikytis pirkimų taisyklių",
-      "plainExplanation": "Viską, ką perkate už projekto lėšas, turite pirkti pagal nustatytas pirkimų taisykles: palyginti kelis pasiūlymus ir išsaugoti dokumentus.",
-      "startsFrom": "contract_signed",
+      "plainExplanation": "Nuo sutarties pasirašymo iki projekto pabaigos viską, ką perkate už projekto lėšas, turite pirkti pagal nustatytas pirkimų taisykles: palyginti kelis pasiūlymus ir išsaugoti dokumentus.",
+      "startsFrom": "project_end",
       "offsetMonths": 0,
       "recurring": "none",
       "risk": "high",
@@ -158,8 +158,8 @@
     {
       "id": "viesieji-pirkimai",
       "title": "Pirkti pagal Viešųjų pirkimų įstatymą",
-      "plainExplanation": "Kaip perkančioji organizacija, visus projekto pirkimus turite vykdyti pagal Viešųjų pirkimų įstatymą ir skelbti juos CVP IS.",
-      "startsFrom": "contract_signed",
+      "plainExplanation": "Kaip perkančioji organizacija, nuo sutarties pasirašymo iki projekto pabaigos visus projekto pirkimus turite vykdyti pagal Viešųjų pirkimų įstatymą ir skelbti juos CVP IS.",
+      "startsFrom": "project_end",
       "offsetMonths": 0,
       "recurring": "none",
       "condition": "contractingAuthority",
