@@ -14,6 +14,7 @@ export default function ReminderForm({ obligations, programName }: { obligations
   async function submit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const email = String(new FormData(e.currentTarget).get("email") ?? "");
+    const demo = (e.nativeEvent as SubmitEvent).submitter?.getAttribute("name") === "demo";
     const deadlines = obligations.flatMap((o) => o.dates.map((date) => ({ title: o.title, date })));
     setSending(true);
     setMsg(null);
@@ -21,12 +22,12 @@ export default function ReminderForm({ obligations, programName }: { obligations
       const res = await fetch("/api/remind", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, programName, deadlines }),
+        body: JSON.stringify({ email, programName, deadlines, demo }),
       });
       const json = await res.json().catch(() => ({}));
       setMsg(
         res.ok
-          ? { ok: true, text: `Užsakyta. Patvirtinimo laišką išsiuntėme į ${email}.` }
+          ? { ok: true, text: demo ? `Pavyzdinį priminimą išsiuntėme į ${email}.` : `Užsakyta. Patvirtinimo laišką išsiuntėme į ${email}.` }
           : { ok: false, text: json.error ?? "Nepavyko užsakyti priminimų." },
       );
     } catch {
@@ -54,6 +55,9 @@ export default function ReminderForm({ obligations, programName }: { obligations
           <Button type="submit" disabled={sending} className="w-full">
             {sending && <LoaderCircle className="animate-spin" aria-hidden />}
             {sending ? "Siunčiama…" : "Gauti priminimus"}
+          </Button>
+          <Button type="submit" name="demo" variant="outline" disabled={sending} className="w-full">
+            Atsiųsti pavyzdinį priminimą dabar
           </Button>
           {msg && (
             <p role={msg.ok ? "status" : "alert"} className={`text-sm ${msg.ok ? "text-primary" : "text-destructive"}`}>

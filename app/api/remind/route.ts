@@ -3,7 +3,8 @@ import { DAY, DAYS_BEFORE, KEY, dayOf, emailButton, emailDeadlines, esc, redis, 
 const isDate = (s: unknown): s is string => typeof s === "string" && /^\d{4}-\d{2}-\d{2}$/.test(s) && !isNaN(Date.parse(s));
 const text = (s: unknown, max: number) => (typeof s === "string" && s.trim() && s.length <= max ? s.trim() : "");
 
-// POST {email, programName, deadlines: [{title, date}]} → {ok}. Sends a confirmation now, stores future reminders.
+// POST {email, programName, deadlines: [{title, date}], demo?} → {ok}. Sends a confirmation now, stores future reminders.
+// demo: true sends one sample reminder for the nearest deadline instead, stores nothing.
 export async function POST(request: Request) {
   const body = await request.json().catch(() => null);
   const email = typeof body?.email === "string" ? body.email.trim().toLowerCase() : "";
@@ -38,6 +39,21 @@ export async function POST(request: Request) {
     await redis("EXPIRE", limitKey, 86400);
 
     const origin = new URL(request.url).origin;
+    if (body.demo === true) {
+      // Demo: the reminder email the cron would send for the nearest deadline, right now; nothing stored.
+      const next = upcoming[0];
+      const left = Math.ceil(dayOf(next.date) - today);
+      await sendEmail(
+        email,
+        `Liko ${left} d.: ${next.title}`,
+        `<h1 style="margin:0 0 8px;font-size:20px;line-height:1.3">Artėja paramos terminas</h1>
+         <p style="margin:0">Laikas pasiruošti šiam įsipareigojimui:</p>
+         ${emailDeadlines([{ date: next.date, title: next.title, note: `Liko ${left} d. · ${programName}` }])}
+         ${emailButton(`${origin}/rezultatai?saltinis=dokumentas`, "Atidaryti Paramos sargą")}`,
+        unsubscribeUrl(origin, email),
+      );
+      return Response.json({ ok: true, reminders: 0 });
+    }
     await sendEmail(
       email,
       `Priminimai užsakyti: ${programName}`,
