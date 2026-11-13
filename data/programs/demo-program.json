@@ -1,0 +1,185 @@
+{
+  "_placeholder": "DEMO DUOMENYS / PLACEHOLDER DATA. Fiktyvi programa ir pavyzdiniai įsipareigojimai. Pakeisti tikrais duomenimis iš oficialių programos dokumentų.",
+  "id": "demo-program",
+  "name": "DEMO: Smulkaus verslo modernizavimas (pavyzdinė programa)",
+  "agency": "DEMO agentūra (pavyzdys)",
+  "sourceDocUrl": "https://example.com/demo-finansavimo-salygu-aprasas.pdf",
+  "obligations": [
+    {
+      "id": "galutine-ataskaita",
+      "title": "Pateikti galutinę projekto ataskaitą",
+      "plainExplanation": "Per 1 mėnesį po projekto pabaigos turite pateikti galutinę ataskaitą: ką nuveikėte, kiek išleidote ir kokių rezultatų pasiekėte.",
+      "startsFrom": "project_end",
+      "offsetMonths": 1,
+      "recurring": "none",
+      "risk": "high",
+      "consequence": "Nepateikus ataskaitos laiku, gali būti sustabdytas paskutinis mokėjimas arba pareikalauta grąžinti dalį paramos.",
+      "source": { "document": "DEMO finansavimo sąlygų aprašas", "page": 14, "clause": "52 p." },
+      "evidence": [
+        "Galutinė ataskaita, pateikta per sistemą",
+        "Sąskaitos faktūros ir mokėjimo įrodymai",
+        "Rezultatų rodiklių įrodymai"
+      ]
+    },
+    {
+      "id": "iranga-5-metus",
+      "title": "Išlaikyti įsigytą įrangą 5 metus",
+      "plainExplanation": "Už paramą nupirktos įrangos negalima parduoti, išnuomoti ar perkelti kitam asmeniui 5 metus po projekto pabaigos. Ji turi būti naudojama projekto tikslais.",
+      "startsFrom": "project_end",
+      "offsetMonths": 60,
+      "recurring": "none",
+      "condition": "boughtEquipment",
+      "risk": "high",
+      "consequence": "Pardavus ar perleidus įrangą anksčiau, gali tekti grąžinti visą ar dalį su ja susijusios paramos.",
+      "source": { "document": "DEMO finansavimo sąlygų aprašas", "page": 18, "clause": "67 p." },
+      "evidence": [
+        "Ilgalaikio turto apskaitos kortelės",
+        "Įrangos nuotraukos su serijiniais numeriais",
+        "Įrangos naudojimo vietos įrodymas"
+      ]
+    },
+    {
+      "id": "darbo-vietos",
+      "title": "Išlaikyti sukurtas darbo vietas",
+      "plainExplanation": "Projekte pažadėtos naujos darbo vietos turi būti išlaikytos 3 metus po projekto pabaigos. Kasmet tai reikia patvirtinti metine ataskaita.",
+      "startsFrom": "project_end",
+      "offsetMonths": 12,
+      "recurring": "yearly",
+      "recurringYears": 3,
+      "condition": "hasJobs",
+      "risk": "high",
+      "consequence": "Nepasiekus ar neišlaikius pažadėto darbo vietų skaičiaus, parama gali būti proporcingai sumažinta.",
+      "source": { "document": "DEMO finansavimo sąlygų aprašas", "page": 16, "clause": "59 p." },
+      "evidence": [
+        "Sodros darbuotojų skaičiaus pažyma",
+        "Darbo sutarčių kopijos",
+        "Metinė ataskaita po projekto pabaigos"
+      ]
+    },
+    {
+      "id": "viesinimas",
+      "title": "Viešinti ES paramą (logotipas ir informacija)",
+      "plainExplanation": "Nuo sutarties pasirašymo savo svetainėje, dokumentuose ir prie įrangos turite rodyti ES logotipą ir nurodyti, kad projektas finansuotas ES lėšomis.",
+      "startsFrom": "contract_signed",
+      "offsetMonths": 0,
+      "recurring": "none",
+      "risk": "medium",
+      "consequence": "Pažeidus viešinimo reikalavimus, gali būti taikoma finansinė korekcija (dažniausiai iki kelių procentų paramos).",
+      "source": { "document": "DEMO finansavimo sąlygų aprašas", "page": 21, "clause": "78 p." },
+      "evidence": [
+        "Svetainės ekrano nuotrauka su ES logotipu ir projekto aprašymu",
+        "Plakato ar lipduko prie įrangos nuotrauka"
+      ]
+    },
+    {
+      "id": "pirkimai",
+      "title": "Laikytis pirkimų taisyklių",
+      "plainExplanation": "Viską, ką perkate už projekto lėšas, turite pirkti pagal nustatytas pirkimų taisykles: palyginti kelis pasiūlymus ir išsaugoti dokumentus.",
+      "startsFrom": "contract_signed",
+      "offsetMonths": 0,
+      "recurring": "none",
+      "risk": "high",
+      "consequence": "Pažeidus pirkimų taisykles, išlaidos gali būti pripažintos netinkamomis ir jų nekompensuos.",
+      "source": { "document": "DEMO finansavimo sąlygų aprašas", "page": 11, "clause": "41 p." },
+      "evidence": [
+        "Tiekėjų apklausos pažyma",
+        "Gauti komerciniai pasiūlymai",
+        "Pirkimo sutartis"
+      ]
+    },
+    {
+      "id": "dokumentu-saugojimas",
+      "title": "Saugoti projekto dokumentus 10 metų",
+      "plainExplanation": "Visus su projektu susijusius dokumentus (sąskaitas, sutartis, ataskaitas) reikia saugoti 10 metų po projekto pabaigos, nes gali būti atliktas patikrinimas.",
+      "startsFrom": "project_end",
+      "offsetMonths": 120,
+      "recurring": "none",
+      "risk": "low",
+      "consequence": "Patikrinimo metu nepateikus dokumentų, susijusios išlaidos gali būti pripažintos netinkamomis.",
+      "source": { "document": "DEMO finansavimo sąlygų aprašas", "page": 23, "clause": "85 p." },
+      "evidence": [
+        "Dokumentų saugojimo vieta (archyvas ar skaitmeninė kopija)",
+        "Projekto dokumentų sąrašas"
+      ]
+    },
+    {
+      "id": "nekilnojamas-turtas",
+      "title": "Nekeisti pastato paskirties ir savininko 5 metus",
+      "plainExplanation": "Pastatyto ar rekonstruoto turto negalima parduoti, perleisti ar naudoti kitai veiklai 5 metus po projekto pabaigos.",
+      "startsFrom": "project_end",
+      "offsetMonths": 60,
+      "recurring": "none",
+      "condition": "boughtRealEstate",
+      "risk": "high",
+      "consequence": "Pakeitus paskirtį ar savininką, gali tekti grąžinti visą su turtu susijusią paramą.",
+      "source": { "document": "DEMO finansavimo sąlygų aprašas", "page": 17, "clause": "63 p." },
+      "evidence": ["Nekilnojamojo turto registro išrašas", "Statybos užbaigimo aktas", "Turto naudojimo nuotraukos"]
+    },
+    {
+      "id": "nematerialus-turtas",
+      "title": "Naudoti nematerialųjį turtą tik savo įmonėje 3 metus",
+      "plainExplanation": "Nupirkta programinė įranga, licencijos ar patentai turi būti apskaityti įmonės balanse ir naudojami tik jūsų įmonėje 3 metus po projekto pabaigos.",
+      "startsFrom": "project_end",
+      "offsetMonths": 36,
+      "recurring": "none",
+      "condition": "boughtIntangible",
+      "risk": "medium",
+      "consequence": "Perleidus turtą kitai įmonei, jo išlaidos gali būti pripažintos netinkamomis.",
+      "source": { "document": "DEMO finansavimo sąlygų aprašas", "page": 17, "clause": "65 p." },
+      "evidence": ["Ilgalaikio turto apskaitos kortelė", "Licencijos sutartis"]
+    },
+    {
+      "id": "pajamu-ataskaita",
+      "title": "Kasmet atsiskaityti už projekto pajamas",
+      "plainExplanation": "Jei projektas uždirba pajamų, kasmet 3 metus po projekto pabaigos reikia pateikti ataskaitą apie gautas pajamas.",
+      "startsFrom": "project_end",
+      "offsetMonths": 12,
+      "recurring": "yearly",
+      "recurringYears": 3,
+      "condition": "generatesRevenue",
+      "risk": "medium",
+      "consequence": "Nedeklaravus pajamų, parama gali būti sumažinta tiek, kiek uždirbta grynųjų pajamų.",
+      "source": { "document": "DEMO finansavimo sąlygų aprašas", "page": 19, "clause": "71 p." },
+      "evidence": ["Pajamų ir išlaidų apskaita", "Metinė finansinė atskaitomybė"]
+    },
+    {
+      "id": "pvm",
+      "title": "Pranešti, jei galite susigrąžinti PVM",
+      "plainExplanation": "Jei PVM buvo apmokėtas iš paramos, bet vėliau tapote PVM mokėtoju ir galite jį susigrąžinti, per 1 mėn. turite apie tai pranešti agentūrai. Ši pareiga galioja 5 metus po projekto pabaigos.",
+      "startsFrom": "project_end",
+      "offsetMonths": 60,
+      "recurring": "none",
+      "condition": "vatEligible",
+      "risk": "medium",
+      "consequence": "Susigrąžinus PVM ir nepranešus, jo suma bus išieškota.",
+      "source": { "document": "DEMO finansavimo sąlygų aprašas", "page": 12, "clause": "44 p." },
+      "evidence": ["PVM mokėtojo registracijos pažyma", "Pranešimas agentūrai"]
+    },
+    {
+      "id": "viesieji-pirkimai",
+      "title": "Pirkti pagal Viešųjų pirkimų įstatymą",
+      "plainExplanation": "Kaip perkančioji organizacija, visus projekto pirkimus turite vykdyti pagal Viešųjų pirkimų įstatymą ir skelbti juos CVP IS.",
+      "startsFrom": "contract_signed",
+      "offsetMonths": 0,
+      "recurring": "none",
+      "condition": "contractingAuthority",
+      "risk": "high",
+      "consequence": "Pažeidus pirkimų tvarką, taikoma finansinė pataisa: dalis ar visos pirkimo išlaidos nefinansuojamos.",
+      "source": { "document": "DEMO finansavimo sąlygų aprašas", "page": 9, "clause": "35 p." },
+      "evidence": ["Pirkimo skelbimas CVP IS", "Pirkimo dokumentai ir protokolai", "Pirkimo sutartis"]
+    },
+    {
+      "id": "nuolatine-lenta",
+      "title": "Pakabinti nuolatinę informacinę lentą",
+      "plainExplanation": "Kai parama yra 500 000 EUR ar daugiau, per 3 mėn. po projekto pabaigos gerai matomoje vietoje turite pakabinti nuolatinę lentą su ES logotipu.",
+      "startsFrom": "project_end",
+      "offsetMonths": 3,
+      "recurring": "none",
+      "condition": "bigGrant",
+      "risk": "low",
+      "consequence": "Neįvykdžius viešinimo reikalavimų, parama gali būti sumažinta iki 3 %.",
+      "source": { "document": "DEMO finansavimo sąlygų aprašas", "page": 15, "clause": "56 p." },
+      "evidence": ["Lentos nuotrauka su data", "Lentos gamybos sąskaita"]
+    }
+  ]
+}
