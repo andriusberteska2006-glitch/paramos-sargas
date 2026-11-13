@@ -12,11 +12,12 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Textarea } from "@/components/ui/textarea";
 import { CONDITION_LABELS, FLAGS, FLAG_LABELS } from "@/lib/flags";
 import type { Flag, ObligationTemplate, Program, UserInputs } from "@/lib/types";
+import sample from "@/data/pavyzdys.json";
 import RiskBadge from "./RiskBadge";
 
 export const STORAGE_KEY = "paramos-sargas:dokumentas";
-/** rulesFrom = name of the /data program whose general rules were merged in. */
-export type DocumentData = { program: Program; inputs: UserInputs; rulesFrom?: string | null };
+/** rulesFrom = name of the /data program whose general rules were merged in; note = what kind of document it was and which values were inferred. */
+export type DocumentData = { program: Program; inputs: UserInputs; rulesFrom?: string | null; note?: string | null };
 
 /** The user's own goal: only "what" and "until when"; the rest gets defaults. */
 const newGoal = (title: string, fixedDate: string): ObligationTemplate => ({
@@ -168,7 +169,7 @@ export default function DocumentUpload({ programs }: { programs: Program[] }) {
           {fileName ? (
             <span className="font-medium break-all">{fileName}</span>
           ) : (
-            <span className="font-medium">Paspauskite arba nutempkite sutartį čia</span>
+            <span className="font-medium">Paspauskite arba nutempkite sutartį, paraišką ar ataskaitą čia</span>
           )}
           <span className="text-sm text-muted-foreground">PDF, JPG arba PNG, iki 4 MB</span>
           <input
@@ -176,15 +177,26 @@ export default function DocumentUpload({ programs }: { programs: Program[] }) {
             name="file"
             accept=".pdf,.jpg,.jpeg,.png"
             required
-            aria-label="Paramos sutartis (PDF, JPG arba PNG, iki 4 MB)"
+            aria-label="Paramos sutartis, paraiška ar ataskaita (PDF, JPG arba PNG, iki 4 MB)"
             onChange={(e) => setFileName(e.target.files?.[0]?.name ?? "")}
             className="absolute inset-0 cursor-pointer opacity-0"
           />
         </label>
-        <Button type="submit" size="lg" disabled={loading} className="self-start">
-          {loading && <LoaderCircle className="animate-spin" aria-hidden />}
-          {loading ? "Nuskaitoma… (gali užtrukti iki minutės)" : "Nuskaityti dokumentą"}
-        </Button>
+        <div className="flex flex-wrap items-center gap-3">
+          <Button type="submit" size="lg" disabled={loading}>
+            {loading && <LoaderCircle className="animate-spin" aria-hidden />}
+            {loading ? "Nuskaitoma… (gali užtrukti iki minutės)" : "Nuskaityti dokumentą"}
+          </Button>
+          {/* Pre-read result of public/pavyzdine-sutartis.pdf: instant, no API call. */}
+          <Button type="button" size="lg" variant="outline" disabled={loading} onClick={() => { setError(""); setData(sample as DocumentData); }}>
+            Išbandyti su pavyzdine sutartimi
+          </Button>
+        </div>
+        <p className="text-sm text-muted-foreground">
+          Neturite sutarties po ranka?{" "}
+          <a href="/pavyzdine-sutartis.pdf" download className="underline underline-offset-4 hover:text-foreground">Atsisiųskite pavyzdinę sutartį</a>{" "}
+          ir įkelkite ją patys.
+        </p>
         {error && (
           <Alert variant="destructive">
             <TriangleExclamationPoint aria-hidden />
@@ -229,11 +241,12 @@ export default function DocumentUpload({ programs }: { programs: Program[] }) {
             <p className="mt-1 text-sm text-muted-foreground">Duomenys saugomi tik jūsų naršyklėje.</p>
           </div>
 
-          {missing.length > 0 && (
+          {(data.note || missing.length > 0) && (
             <Alert>
               <TriangleExclamationPoint aria-hidden />
               <AlertDescription>
-                Dokumente neradome {missing.join(", ")}. Įveskite jas patys. Jos nurodomos pasirašytoje finansavimo sutartyje, paraiškoje jų dažniausiai nėra.
+                {data.note && <p>{data.note} Patikrinkite šias reikšmes.</p>}
+                {missing.length > 0 && <p>Dokumente neradome {missing.join(", ")}. Įveskite jas patys.</p>}
               </AlertDescription>
             </Alert>
           )}
@@ -273,7 +286,7 @@ export default function DocumentUpload({ programs }: { programs: Program[] }) {
               <CardDescription>
                 {data.rulesFrom
                   ? `Įtrauktos programos „${data.rulesFrom}“ bendrosios taisyklės. Jei kažko trūksta, pridėkite savo tikslą apačioje.`
-                  : "Programos bendrųjų taisyklių neradome. Rodomi tik sutartyje rasti įsipareigojimai."}
+                  : "Programos bendrųjų taisyklių neradome. Rodomi tik dokumente rasti įsipareigojimai."}
               </CardDescription>
             </CardHeader>
             <CardContent className="flex flex-col gap-3">

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import AskBox from "@/components/AskBox";
+import ReminderForm from "@/components/ReminderForm";
 import ResultsHeader from "@/components/ResultsHeader";
 import Timeline from "@/components/Timeline";
 import UploadedResults from "@/components/UploadedResults";
@@ -24,7 +25,7 @@ const back = (label: string) => (
   </Button>
 );
 
-const shell = "mx-auto flex w-full max-w-6xl flex-col gap-6 px-4 py-8 sm:px-6";
+const shell = "mx-auto flex w-full max-w-3xl flex-col gap-6 px-4 py-8 sm:px-6";
 
 export default async function ResultsPage({ searchParams }: PageProps<"/rezultatai">) {
   const q = await searchParams;
@@ -79,8 +80,9 @@ export default async function ResultsPage({ searchParams }: PageProps<"/rezultat
     <main className={shell}>
       {back("Keisti duomenis")}
       <ResultsHeader program={program} inputs={inputs} count={obligations.length} />
-      <AskBox programId={program.id} />
       <Timeline obligations={obligations} programId={program.id} programName={program.name} glossary={program.glossary} docUrl={program.sourceDocUrl} />
+      <AskBox programId={program.id} />
+      <ReminderForm obligations={obligations} programName={program.name} />
     </main>
   );
 }

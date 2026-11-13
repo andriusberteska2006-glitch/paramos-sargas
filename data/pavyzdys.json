@@ -1,0 +1,386 @@
+{
+  "program": {
+    "id": "pavyzdys",
+    "name": "Gamybos procesų modernizavimas",
+    "agency": "Verslo plėtros agentūra",
+    "sourceDocUrl": "",
+    "obligations": [
+      {
+        "title": "Įgyvendinti projekto veiklas laiku",
+        "plainExplanation": "Visas projekto veiklas (staklių ir roboto įsigijimą, montavimą, mokymus) reikia baigti iki 2026-09-30. Jei reikia pratęsti terminą (iki 6 mėn.), motyvuotą prašymą pateikite ne vėliau kaip likus 30 dienų iki veiklų pabaigos.",
+        "fixedDate": "2026-09-30",
+        "startsFrom": "project_end",
+        "offsetMonths": 0,
+        "recurring": "none",
+        "recurringYears": 1,
+        "risk": "medium",
+        "consequence": "Neįgyvendinus veiklų laiku, vėliau patirtos išlaidos gali būti nefinansuojamos, o parama sumažinta.",
+        "source": {
+          "document": "Projekto finansavimo ir administravimo sutartis Nr. PAV-2025-0417",
+          "page": 1,
+          "clause": "3.1 p."
+        },
+        "evidence": [
+          "Perdavimo–priėmimo aktai",
+          "Mokymų dokumentai",
+          "Pratęsimo prašymas (jei teiktas)"
+        ],
+        "id": "sutartis-1"
+      },
+      {
+        "title": "Teikti tarpinius mokėjimo prašymus kas ketvirtį",
+        "plainExplanation": "Kas 3 mėnesius, ne vėliau kaip per 15 kalendorinių dienų pasibaigus ketvirčiui, pateikite tarpinį mokėjimo prašymą. Pirmasis – iki 2025-04-15.",
+        "fixedDate": "2025-04-15",
+        "startsFrom": "contract_signed",
+        "offsetMonths": 2,
+        "recurring": "none",
+        "recurringYears": 1,
+        "risk": "medium",
+        "consequence": "Nepateikus prašymų laiku, gali vėluoti arba būti sustabdyti paramos mokėjimai.",
+        "source": {
+          "document": "Projekto finansavimo ir administravimo sutartis Nr. PAV-2025-0417",
+          "page": 1,
+          "clause": "3.2 p."
+        },
+        "evidence": [
+          "Pateikti mokėjimo prašymai",
+          "Sąskaitos faktūros",
+          "Mokėjimo įrodymai"
+        ],
+        "id": "sutartis-2"
+      },
+      {
+        "title": "Pateikti galutinį mokėjimo prašymą ir ataskaitą",
+        "plainExplanation": "Per 30 kalendorinių dienų po veiklų pabaigos (iki 2026-10-30) pateikite galutinį mokėjimo prašymą ir projekto įgyvendinimo ataskaitą.",
+        "startsFrom": "project_end",
+        "offsetMonths": 1,
+        "recurring": "none",
+        "recurringYears": 1,
+        "risk": "medium",
+        "consequence": "Nepateikus laiku, gali būti sustabdytas galutinis mokėjimas.",
+        "source": {
+          "document": "Projekto finansavimo ir administravimo sutartis Nr. PAV-2025-0417",
+          "page": 1,
+          "clause": "3.3 p."
+        },
+        "evidence": [
+          "Galutinis mokėjimo prašymas",
+          "Projekto įgyvendinimo ataskaita",
+          "Sąskaitos ir mokėjimo įrodymai"
+        ],
+        "id": "sutartis-3"
+      },
+      {
+        "title": "Pirkti pagal Pirkimų taisykles",
+        "plainExplanation": "Visus pirkimus vykdykite pagal Aprašo 4 priedo Pirkimų taisykles. Kai pirkimas viršija 10 000 EUR be PVM, gaukite bent 3 komercinius pasiūlymus ir paskelbkite pirkimą viešai.",
+        "startsFrom": "project_end",
+        "offsetMonths": 0,
+        "recurring": "none",
+        "recurringYears": 1,
+        "risk": "high",
+        "consequence": "Taikoma finansinė pataisa nuo 5 iki 100 proc. su pirkimu susijusių išlaidų.",
+        "source": {
+          "document": "Projekto finansavimo ir administravimo sutartis Nr. PAV-2025-0417",
+          "page": 1,
+          "clause": "3.4 p., 5.3 p."
+        },
+        "evidence": [
+          "Pirkimo skelbimas",
+          "Ne mažiau kaip 3 komerciniai pasiūlymai",
+          "Pasiūlymų vertinimo dokumentai",
+          "Pirkimo sutartys"
+        ],
+        "id": "sutartis-4"
+      },
+      {
+        "title": "Viešinti projektą",
+        "plainExplanation": "Savo svetainėje paskelbkite trumpą projekto aprašymą su ES finansavimo ženklu, o įgyvendinimo vietoje gerai matomoje vietoje pakabinkite ne mažesnį kaip A3 formato informacinį plakatą.",
+        "startsFrom": "project_end",
+        "offsetMonths": 0,
+        "recurring": "none",
+        "recurringYears": 1,
+        "risk": "medium",
+        "consequence": "Pažeidus viešinimo reikalavimus (Aprašo 61–64 p.), gali būti taikoma finansinė korekcija.",
+        "source": {
+          "document": "Projekto finansavimo ir administravimo sutartis Nr. PAV-2025-0417",
+          "page": 1,
+          "clause": "3.5 p."
+        },
+        "evidence": [
+          "Svetainės ekrano nuotrauka su ES ženklu",
+          "A3 plakato nuotrauka vietoje su data"
+        ],
+        "id": "sutartis-5"
+      },
+      {
+        "title": "Sukurti 3 naujas darbo vietas",
+        "plainExplanation": "Iki projekto veiklų pabaigos įdarbinkite ne mažiau kaip 3 naujus darbuotojus visu etatu.",
+        "fixedDate": "2026-09-30",
+        "startsFrom": "project_end",
+        "offsetMonths": 0,
+        "recurring": "none",
+        "recurringYears": 1,
+        "risk": "high",
+        "consequence": "Nepasiekus darbo vietų skaičiaus, parama mažinama Aprašo 70 p. nustatyta tvarka.",
+        "source": {
+          "document": "Projekto finansavimo ir administravimo sutartis Nr. PAV-2025-0417",
+          "page": 1,
+          "clause": "3.6 p., 5.2 p."
+        },
+        "evidence": [
+          "Darbo sutartys",
+          "Sodros darbuotojų skaičiaus pažyma",
+          "Etatų sąrašas"
+        ],
+        "id": "sutartis-6"
+      },
+      {
+        "title": "Apdrausti įrangą ir išlaikyti draudimą",
+        "plainExplanation": "Per 10 darbo dienų nuo įrangos perdavimo–priėmimo akto apdrauskite ją nuo visų rizikų ir draudimą palaikykite iki tęstinumo pabaigos (2029-09-30).",
+        "fixedDate": "2029-09-30",
+        "startsFrom": "project_end",
+        "offsetMonths": 36,
+        "recurring": "none",
+        "recurringYears": 1,
+        "risk": "medium",
+        "consequence": "Tai sutarties pažeidimas; įrangai sugadinus be draudimo gali tekti grąžinti su ja susijusią paramą.",
+        "source": {
+          "document": "Projekto finansavimo ir administravimo sutartis Nr. PAV-2025-0417",
+          "page": 2,
+          "clause": "3.7 p."
+        },
+        "evidence": [
+          "Draudimo polisai",
+          "Draudimo įmokų mokėjimo įrodymai",
+          "Perdavimo–priėmimo aktai"
+        ],
+        "id": "sutartis-7"
+      },
+      {
+        "title": "Pranešti Agentūrai apie pasikeitimus",
+        "plainExplanation": "Per 10 darbo dienų raštu informuokite Agentūrą, jei pasikeitė buveinė, vadovas, banko sąskaita, savininkai, iškelta bankroto ar restruktūrizavimo byla ar atsirado kliūčių projektui.",
+        "fixedDate": "2029-09-30",
+        "startsFrom": "project_end",
+        "offsetMonths": 36,
+        "recurring": "none",
+        "recurringYears": 1,
+        "risk": "medium",
+        "consequence": "Nepranešus laiku, tai laikoma sutarties pažeidimu ir gali būti sustabdyti mokėjimai.",
+        "source": {
+          "document": "Projekto finansavimo ir administravimo sutartis Nr. PAV-2025-0417",
+          "page": 2,
+          "clause": "3.8 p."
+        },
+        "evidence": [
+          "Rašytiniai pranešimai Agentūrai",
+          "Registrų centro išrašai"
+        ],
+        "id": "sutartis-8"
+      },
+      {
+        "title": "Neperleisti įrangos 3 metus po projekto",
+        "plainExplanation": "Iki 2029-09-30 už paramą įsigytos įrangos negalima parduoti, perleisti, išnuomoti ar įkeisti.",
+        "fixedDate": "2029-09-30",
+        "startsFrom": "project_end",
+        "offsetMonths": 36,
+        "recurring": "none",
+        "recurringYears": 1,
+        "risk": "high",
+        "consequence": "Reikės grąžinti perleistai įrangai tenkančią paramos dalį, proporcingai likusiam tęstinumo laikotarpiui.",
+        "source": {
+          "document": "Projekto finansavimo ir administravimo sutartis Nr. PAV-2025-0417",
+          "page": 2,
+          "clause": "4.2 p. (a), 5.1 p."
+        },
+        "evidence": [
+          "Ilgalaikio turto apskaitos kortelės",
+          "Įrangos nuotraukos su serijiniais numeriais"
+        ],
+        "id": "sutartis-9"
+      },
+      {
+        "title": "Naudoti įrangą tik nurodytoje vietoje",
+        "plainExplanation": "Įranga turi būti eksploatuojama buveinėje arba paraiškoje nurodytoje vietoje; perkelti ją kitur galima tik gavus išankstinį Agentūros sutikimą.",
+        "fixedDate": "2029-09-30",
+        "startsFrom": "project_end",
+        "offsetMonths": 36,
+        "recurring": "none",
+        "recurringYears": 1,
+        "risk": "medium",
+        "consequence": "Perkėlimas be sutikimo laikomas sutarties pažeidimu.",
+        "source": {
+          "document": "Projekto finansavimo ir administravimo sutartis Nr. PAV-2025-0417",
+          "page": 2,
+          "clause": "4.6 p."
+        },
+        "evidence": [
+          "Įrangos nuotraukos naudojimo vietoje",
+          "Agentūros sutikimas (jei perkelta)"
+        ],
+        "id": "sutartis-10"
+      },
+      {
+        "title": "Nekeisti veiklos pobūdžio ir neperkelti gamybos iš Lietuvos",
+        "plainExplanation": "Iki 2029-09-30 nekeiskite remiamos ekonominės veiklos pobūdžio ir neperkelkite gamybos už Lietuvos ribų.",
+        "fixedDate": "2029-09-30",
+        "startsFrom": "project_end",
+        "offsetMonths": 36,
+        "recurring": "none",
+        "recurringYears": 1,
+        "risk": "medium",
+        "consequence": "Tai tęstinumo įsipareigojimo pažeidimas; parama gali būti susigrąžinta.",
+        "source": {
+          "document": "Projekto finansavimo ir administravimo sutartis Nr. PAV-2025-0417",
+          "page": 2,
+          "clause": "4.2 p. (b), (c)"
+        },
+        "evidence": [
+          "Įmonės veiklos aprašymas, EVRK kodai",
+          "Gamybos vietos įrodymai"
+        ],
+        "id": "sutartis-11"
+      },
+      {
+        "title": "Išlaikyti sukurtas darbo vietas",
+        "plainExplanation": "3 sukurtas darbo vietas visu etatu išlaikykite visą tęstinumo laikotarpį iki 2029-09-30.",
+        "fixedDate": "2029-09-30",
+        "startsFrom": "project_end",
+        "offsetMonths": 36,
+        "recurring": "none",
+        "recurringYears": 1,
+        "risk": "high",
+        "consequence": "Neišlaikius darbo vietų, parama mažinama Aprašo 70 p. tvarka.",
+        "source": {
+          "document": "Projekto finansavimo ir administravimo sutartis Nr. PAV-2025-0417",
+          "page": 2,
+          "clause": "4.2 p. (d), 5.2 p."
+        },
+        "evidence": [
+          "Sodros darbuotojų skaičiaus pažymos",
+          "Darbo sutartys"
+        ],
+        "id": "sutartis-12"
+      },
+      {
+        "title": "Pasiekti pardavimo pajamų padidėjimo rodiklį",
+        "plainExplanation": "Per tęstinumo laikotarpį padidinkite pardavimo pajamas, kaip numatyta Aprašo 54–55 p., lyginant su paraiškos pateikimo metais.",
+        "fixedDate": "2029-09-30",
+        "startsFrom": "project_end",
+        "offsetMonths": 36,
+        "recurring": "none",
+        "recurringYears": 1,
+        "risk": "medium",
+        "consequence": "Nepasiekus rodiklio, parama gali būti sumažinta pagal Aprašą.",
+        "source": {
+          "document": "Projekto finansavimo ir administravimo sutartis Nr. PAV-2025-0417",
+          "page": 2,
+          "clause": "4.3 p."
+        },
+        "evidence": [
+          "Metinės finansinės ataskaitos",
+          "Pardavimo pajamų skaičiavimas"
+        ],
+        "id": "sutartis-13"
+      },
+      {
+        "title": "Teikti metines tęstinumo ataskaitas",
+        "plainExplanation": "Kasmet iki kovo 31 d. pateikite Agentūrai tęstinumo ataskaitą už praėjusius kalendorinius metus (2027, 2028 ir 2029 m.).",
+        "fixedDate": "2027-03-31",
+        "startsFrom": "project_end",
+        "offsetMonths": 6,
+        "recurring": "yearly",
+        "recurringYears": 3,
+        "risk": "medium",
+        "consequence": "Nepateikus ataskaitų, laikoma, kad pažeista sutartis; gali būti tikrinama ar taikomos sankcijos.",
+        "source": {
+          "document": "Projekto finansavimo ir administravimo sutartis Nr. PAV-2025-0417",
+          "page": 2,
+          "clause": "4.4 p."
+        },
+        "evidence": [
+          "Pateiktos metinės ataskaitos",
+          "Darbo vietų ir pajamų įrodymai"
+        ],
+        "id": "sutartis-14"
+      },
+      {
+        "title": "Pateikti paskutinę tęstinumo ataskaitą",
+        "plainExplanation": "Per 30 kalendorinių dienų nuo tęstinumo pabaigos (iki 2029-10-30) pateikite paskutinę tęstinumo ataskaitą.",
+        "fixedDate": "2029-10-30",
+        "startsFrom": "project_end",
+        "offsetMonths": 37,
+        "recurring": "none",
+        "recurringYears": 1,
+        "risk": "medium",
+        "consequence": "Nepateikus ataskaitos, gali būti taikomos sankcijos ar atliktas patikrinimas.",
+        "source": {
+          "document": "Projekto finansavimo ir administravimo sutartis Nr. PAV-2025-0417",
+          "page": 2,
+          "clause": "4.4 p."
+        },
+        "evidence": [
+          "Paskutinė tęstinumo ataskaita",
+          "Rodiklių pasiekimo įrodymai"
+        ],
+        "id": "sutartis-15"
+      },
+      {
+        "title": "Saugoti projekto dokumentus 10 metų",
+        "plainExplanation": "Visus su projektu susijusius dokumentus saugokite iki 2036-09-30 ir pateikite juos Agentūrai, Europos Komisijai ar auditoriams paprašius.",
+        "fixedDate": "2036-09-30",
+        "startsFrom": "project_end",
+        "offsetMonths": 120,
+        "recurring": "none",
+        "recurringYears": 1,
+        "risk": "medium",
+        "consequence": "Nepateikus dokumentų patikrinimo metu, susijusios išlaidos gali būti pripažintos netinkamomis.",
+        "source": {
+          "document": "Projekto finansavimo ir administravimo sutartis Nr. PAV-2025-0417",
+          "page": 2,
+          "clause": "4.5 p."
+        },
+        "evidence": [
+          "Dokumentų archyvas ar skaitmeninės kopijos",
+          "Projekto dokumentų sąrašas"
+        ],
+        "id": "sutartis-16"
+      },
+      {
+        "title": "Vengti dvigubo finansavimo",
+        "plainExplanation": "Tų pačių projekto išlaidų negalima finansuoti iš kitų paramos šaltinių.",
+        "startsFrom": "project_end",
+        "offsetMonths": 36,
+        "recurring": "none",
+        "recurringYears": 1,
+        "risk": "high",
+        "consequence": "Nustačius dvigubą finansavimą, grąžinama visa su tomis išlaidomis susijusi parama per 30 d., vėluojant – 0,02 proc. palūkanos už dieną.",
+        "source": {
+          "document": "Projekto finansavimo ir administravimo sutartis Nr. PAV-2025-0417",
+          "page": 2,
+          "clause": "5.4 p., 5.5 p."
+        },
+        "evidence": [
+          "Išlaidų finansavimo šaltinių apskaita",
+          "Sąskaitų žymėjimas projekto kodu"
+        ],
+        "id": "sutartis-17"
+      }
+    ]
+  },
+  "inputs": {
+    "programId": "pavyzdys",
+    "contractSignedDate": "2025-02-14",
+    "projectEndDate": "2026-09-30",
+    "grantAmount": 120000,
+    "promisedJobs": 3,
+    "isSme": true,
+    "boughtEquipment": true,
+    "boughtRealEstate": false,
+    "boughtIntangible": false,
+    "generatesRevenue": true,
+    "vatEligible": false,
+    "contractingAuthority": false
+  },
+  "rulesFrom": null,
+  "note": "Tai pavyzdinė projekto finansavimo ir administravimo sutartis. „Projektas uždirbs pajamų“ nustatyta netiesiogiai – iš pardavimo pajamų padidėjimo rodiklio (4.3 p.); SVV statusas ir PVM tinkamumas sutartyje nenurodyti."
+}

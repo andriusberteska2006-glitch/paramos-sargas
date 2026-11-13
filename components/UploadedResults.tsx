@@ -7,6 +7,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Skeleton } from "@/components/ui/skeleton";
 import { computeObligations } from "@/lib/obligations";
 import AskBox from "./AskBox";
+import ReminderForm from "./ReminderForm";
 import { STORAGE_KEY, type DocumentData } from "./DocumentUpload";
 import ResultsHeader from "./ResultsHeader";
 import Timeline from "./Timeline";
@@ -58,8 +59,10 @@ export default function UploadedResults() {
   return (
     <>
       <ResultsHeader program={program} inputs={inputs} count={obligations.length} />
-      <AskBox programId={program.id} program={program} />
       <Timeline obligations={obligations} programId={program.id} programName={program.name} glossary={program.glossary} docUrl={program.sourceDocUrl} />
+      {/* Only the obligations that apply, with their computed dates, so answers can name exact deadlines. */}
+      <AskBox programId={program.id} program={{ ...program, obligations }} />
+      <ReminderForm obligations={obligations} programName={program.name} />
     </>
   );
 }

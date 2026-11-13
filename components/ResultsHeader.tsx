@@ -14,6 +14,7 @@ export default function ResultsHeader({ program, inputs, count }: { program: Pro
         <p className="text-sm font-medium text-muted-foreground">Jūsų įsipareigojimai</p>
         <h1 className="mt-1 text-3xl font-semibold tracking-tight text-balance">{program.name}</h1>
         {program.agency && <p className="mt-1 text-muted-foreground">{program.agency}</p>}
+        <a href="#ask-question" className="mt-3 inline-block text-primary underline underline-offset-4 hover:text-primary/80">Turite klausimą? Klauskite apačioje</a>
       </div>
       {/* One spec-sheet block (1px gaps show the border colour) instead of four floating KPI tiles. */}
       <dl className="grid grid-cols-2 gap-px overflow-hidden rounded-xl bg-border ring-1 ring-border lg:grid-cols-4">
