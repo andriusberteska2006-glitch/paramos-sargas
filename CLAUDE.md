@@ -78,3 +78,10 @@ Obligation = ObligationTemplate & { dueDate, dates: string[] }  // dates are YYY
 
 ## Team rule
 **Keep changes small and inside your own folder; do not refactor other people's code.** Changing `lib/types.ts` or `lib/obligations.ts` affects everyone: tell the team first and run the self-check and `npm run build`.
+
+## Git workflow (GitHub: andriusberteska2006-glitch/paramos-sargas, private)
+- Never commit to `main`. Start every feature from fresh main: `git checkout main && git pull && git checkout -b <name>/<feature>` (e.g. `andrius/priminimai`).
+- One branch = one feature, merged within hours, not days. Touch only that feature's files. Shared files (`lib/types.ts`, `lib/obligations.ts`, `package.json`, `CLAUDE.md`) only after telling the team.
+- Before pushing: `git merge main`, fix conflicts locally, `npm run build` must pass (plus the self-checks if you touched those files).
+- `git push -u origin <branch>`, open a Pull Request on GitHub, merge it there, delete the branch.
+- Never commit `.env.local` or any key.
