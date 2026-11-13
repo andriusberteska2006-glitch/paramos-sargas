@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState } from "react";
 import type { GlossaryTerm, Obligation, Risk } from "@/lib/types";
 import EvidenceChecklist from "./EvidenceChecklist";
 
@@ -31,6 +32,17 @@ export default function ObligationCard({
   glossary?: GlossaryTerm[];
   docUrl: string;
 }) {
+  // An NFC/QR tag on the equipment opens /rezultatai?...&zyma=<obligation id>.
+  // Read after mount (not useSearchParams) so it also works when cards render late from localStorage.
+  const ref = useRef<HTMLElement>(null);
+  const [fromTag, setFromTag] = useState(false);
+  useEffect(() => {
+    if (new URLSearchParams(location.search).get("zyma") !== o.id) return;
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- one-time read of the URL after mount
+    setFromTag(true);
+    ref.current?.scrollIntoView();
+  }, [o.id]);
+
   const popId = `paaiskinimas-${o.id}`;
   const open = () => {
     const p = document.getElementById(popId);
@@ -50,8 +62,20 @@ export default function ObligationCard({
   return (
     <article
       id={`isipareigojimas-${o.id}`}
+      ref={ref}
       className={`flex scroll-mt-4 flex-col gap-2 rounded border-l-4 p-4 text-gray-900 target:ring-4 target:ring-blue-600 ${riskStyle[o.risk]}`}
     >
+      {fromTag && (
+        <div role="alert" className="flex flex-col gap-1 rounded bg-red-700 p-3 text-white">
+          <p className="text-lg font-bold">Pirkta už ES paramą</p>
+          <p className="font-semibold">{o.title}: iki {o.dueDate}</p>
+          <p>{o.plainExplanation}</p>
+          <p><strong>Pasekmė:</strong> {o.consequence}</p>
+          <a href="#ask-question" className="self-start font-semibold underline">
+            Prieš parduodant, perkeliant ar išmetant paklauskite „Ar galiu…?“
+          </a>
+        </div>
+      )}
       {/* The whole top of the card opens the plain-language window; the checklist below stays separately clickable. */}
       <div onClick={open} className="flex cursor-pointer flex-col gap-2">
         <div className="flex flex-wrap items-baseline justify-between gap-2">

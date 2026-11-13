@@ -1,7 +1,15 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { AskResponse, Program } from "@/lib/types";
+
+// Shown when the page was opened from a tag on the equipment (?zyma=...): the questions people ask standing next to it.
+const TAG_QUESTIONS = [
+  "Ar galiu parduoti šią įrangą?",
+  "Ar galiu perkelti ją į kitą adresą ar padalinį?",
+  "Ar galiu ją išnuomoti ar paskolinti?",
+  "Įranga sugedo arba pavogta. Ką daryti?",
+];
 
 /** `program` is sent along for programs read from an uploaded document (not in /data). */
 export default function AskBox({ programId, program }: { programId: string; program?: Program }) {
@@ -9,6 +17,9 @@ export default function AskBox({ programId, program }: { programId: string; prog
   const [result, setResult] = useState<AskResponse | null>(null);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [fromTag, setFromTag] = useState(false);
+  // eslint-disable-next-line react-hooks/set-state-in-effect -- one-time read of the URL after mount
+  useEffect(() => setFromTag(new URLSearchParams(location.search).has("zyma")), []);
 
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -33,6 +44,15 @@ export default function AskBox({ programId, program }: { programId: string; prog
   return (
     <section className="flex flex-col gap-2">
       <h2 className="text-lg font-semibold">Klauskite: „Ar galiu…?“</h2>
+      {fromTag && (
+        <div className="flex flex-wrap gap-2">
+          {TAG_QUESTIONS.map((q) => (
+            <button key={q} type="button" onClick={() => setQuestion(q)} className="rounded-full border border-blue-700 px-3 py-1 text-sm text-blue-700">
+              {q}
+            </button>
+          ))}
+        </div>
+      )}
       <form onSubmit={onSubmit} className="flex flex-col gap-2">
         <label htmlFor="ask-question" className="sr-only">Jūsų klausimas</label>
         <textarea
