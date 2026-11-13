@@ -59,14 +59,14 @@ export default function ObligationCard({
   return (
     <Card id={`isipareigojimas-${o.id}`} ref={ref} className="gap-0 py-0 target:ring-2 target:ring-ring">
       {fromTag && (
-        <Alert variant="destructive" className="rounded-none border-0 bg-destructive px-4 py-3 text-white sm:px-5 *:data-[slot=alert-description]:text-white/90">
+        <Alert variant="destructive" className="rounded-none border-0 bg-destructive/15 px-4 py-3 sm:px-5 *:data-[slot=alert-description]:text-foreground/90">
           <TriangleExclamationPoint aria-hidden />
           <AlertTitle className="text-base font-semibold">Pirkta už ES paramą</AlertTitle>
           <AlertDescription className="flex flex-col gap-1">
-            <span className="font-medium text-white">{o.title}: iki {o.dueDate}</span>
+            <span className="font-medium text-foreground">{o.title}: iki {o.dueDate}</span>
             <span>{o.plainExplanation}</span>
             <span><strong>Pasekmė:</strong> {o.consequence}</span>
-            <a href="#ask-question" className="font-semibold text-white">
+            <a href="#ask-question" className="font-semibold text-destructive">
               Prieš parduodant, perkeliant ar išmetant paklauskite „Ar galiu…?“
             </a>
           </AlertDescription>

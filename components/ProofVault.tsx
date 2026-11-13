@@ -72,9 +72,7 @@ export default function ProofVault() {
   if (rows.length === 0) {
     return (
       <div className="flex flex-col items-center gap-3 rounded-xl border border-dashed px-6 py-14 text-center">
-        <span className="grid size-12 place-items-center rounded-full bg-accent text-primary">
-          <FolderOpen className="size-6" aria-hidden />
-        </span>
+        <FolderOpen className="size-6 text-muted-foreground" aria-hidden />
         <p className="font-medium">Įrodymų dar nėra</p>
         <p className="max-w-sm text-sm text-muted-foreground">Juos pridėsite prie įsipareigojimų kortelių punktų.</p>
         <Button asChild variant="outline" className="mt-2">

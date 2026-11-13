@@ -11,13 +11,14 @@ export default function ResultsHeader({ program, inputs, count }: { program: Pro
   return (
     <header className="flex flex-col gap-5">
       <div>
-        <p className="text-sm font-medium text-primary">Jūsų įsipareigojimai</p>
+        <p className="text-sm font-medium text-muted-foreground">Jūsų įsipareigojimai</p>
         <h1 className="mt-1 text-3xl font-semibold tracking-tight text-balance">{program.name}</h1>
         {program.agency && <p className="mt-1 text-muted-foreground">{program.agency}</p>}
       </div>
-      <dl className="grid grid-cols-2 gap-3 lg:grid-cols-4">
+      {/* One spec-sheet block (1px gaps show the border colour) instead of four floating KPI tiles. */}
+      <dl className="grid grid-cols-2 gap-px overflow-hidden rounded-xl bg-border ring-1 ring-border lg:grid-cols-4">
         {stats.map(([label, value]) => (
-          <div key={label} className="rounded-xl bg-card px-4 py-3 ring-1 ring-foreground/10">
+          <div key={label} className="bg-card px-4 py-3">
             <dt className="text-sm text-muted-foreground">{label}</dt>
             <dd className="mt-0.5 text-lg font-semibold tabular-nums">{value}</dd>
           </div>

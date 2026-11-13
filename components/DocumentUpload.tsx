@@ -98,6 +98,10 @@ export default function DocumentUpload({ programs }: { programs: Program[] }) {
   const [manualOpen, setManualOpen] = useState(false);
   // Closing the manual section hides its editor too (data is kept for when it is reopened).
   const showEditor = data && (!data.program.id.startsWith("rankinis-") || manualOpen);
+  // Extraction leaves these empty when the document doesn't state them (e.g. an application, not a contract).
+  const missing = data && !data.program.id.startsWith("rankinis-")
+    ? [!data.inputs.contractSignedDate && "sutarties pasirašymo datos", !data.inputs.projectEndDate && "projekto pabaigos datos", !data.inputs.grantAmount && "paramos sumos"].filter(Boolean)
+    : [];
   const [goal, setGoal] = useState({ title: "", date: "" });
   // Program rules from /data are our curated data: shown and removable, not edited.
   const ruleIds = new Set(programs.flatMap((p) => p.obligations.map((o) => o.id)));
@@ -160,9 +164,7 @@ export default function DocumentUpload({ programs }: { programs: Program[] }) {
       <form onSubmit={onUpload} className="flex flex-col gap-4">
         {/* The real file input covers the whole zone (invisible), so click, drag & drop and `required` stay native. */}
         <label className="relative flex cursor-pointer flex-col items-center gap-3 rounded-xl border-2 border-dashed border-input bg-muted/40 px-6 py-10 text-center transition-colors hover:border-primary/50 hover:bg-accent/40 has-focus-visible:border-primary has-focus-visible:ring-3 has-focus-visible:ring-ring/50">
-          <span className="grid size-12 place-items-center rounded-full bg-accent text-primary">
-            <FileUp className="size-6" aria-hidden />
-          </span>
+          <FileUp className="size-6 text-muted-foreground" aria-hidden />
           {fileName ? (
             <span className="font-medium break-all">{fileName}</span>
           ) : (
@@ -226,6 +228,15 @@ export default function DocumentUpload({ programs }: { programs: Program[] }) {
             <h2 className="text-xl font-semibold tracking-tight">Patikrinkite, pataisykite ir papildykite duomenis</h2>
             <p className="mt-1 text-sm text-muted-foreground">Duomenys saugomi tik jūsų naršyklėje.</p>
           </div>
+
+          {missing.length > 0 && (
+            <Alert>
+              <TriangleExclamationPoint aria-hidden />
+              <AlertDescription>
+                Dokumente neradome {missing.join(", ")}. Įveskite jas patys. Jos nurodomos pasirašytoje finansavimo sutartyje, paraiškoje jų dažniausiai nėra.
+              </AlertDescription>
+            </Alert>
+          )}
 
           <Card>
             <CardHeader>

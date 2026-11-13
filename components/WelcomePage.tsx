@@ -5,11 +5,9 @@ import {
   Bell,
   CalendarClock,
   Check,
-  ClipboardCheck,
   Cpu,
   Ellipsis,
   Factory,
-  FileUp,
   Paperclip,
   Store,
   Tent,
@@ -17,8 +15,9 @@ import {
   Users,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import type { Program } from "@/lib/types";
+import type { Program, Risk } from "@/lib/types";
 import DocumentUpload from "./DocumentUpload";
+import RiskBadge from "./RiskBadge";
 
 const sectors = [
   ["Prekyba ir paslaugos", "Parduotuvėms, salonams ir paslaugų verslams.", Store],
@@ -31,10 +30,17 @@ const sectors = [
 ] as const;
 
 const steps = [
-  ["Įkelkite sutartį", "PDF, JPG arba PNG dokumentą perskaitysime automatiškai.", FileUp],
-  ["Patikrinkite duomenis", "Pataisykite informaciją ir papildykite savo tikslus.", ClipboardCheck],
-  ["Stebėkite terminus", "Matykite darbus laiko juostoje ir pasiruoškite įrodymus.", CalendarClock],
+  ["Įkelkite sutartį", "PDF, JPG arba PNG dokumentą perskaitysime automatiškai."],
+  ["Patikrinkite duomenis", "Pataisykite informaciją ir papildykite savo tikslus."],
+  ["Stebėkite terminus", "Matykite darbus laiko juostoje ir pasiruoškite įrodymus."],
 ] as const;
+
+// Decorative sample of the results page, so the hero shows the real product instead of an illustration.
+const preview: [string, string, Risk][] = [
+  ["2027-03-31", "Pateikti metinę ataskaitą", "medium"],
+  ["2027-06-30", "Išlaikyti sukurtas darbo vietas", "high"],
+  ["2028-12-31", "Nenaudoti įrangos kitai veiklai", "high"],
+];
 
 const features = [
   [CalendarClock, "Terminai laiko juostoje"],
@@ -52,11 +58,9 @@ export default function WelcomePage({ programs }: { programs: Program[] }) {
   return (
     <main className="mx-auto w-full max-w-6xl px-4 pb-16 sm:px-6">
       <section id="pradzia" className="grid gap-10 py-14 lg:grid-cols-[1.1fr_.9fr] lg:items-center lg:py-24">
-        <div className="motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-bottom-2 motion-safe:duration-500">
-          <p className="inline-flex rounded-full bg-accent px-3 py-1 text-sm font-medium text-accent-foreground">
-            Paramos įsipareigojimai vienoje vietoje
-          </p>
-          <h1 className="mt-5 max-w-2xl text-4xl font-semibold tracking-tight text-balance sm:text-5xl lg:text-6xl">
+        <div>
+          <p className="text-sm font-medium text-muted-foreground">Paramos įsipareigojimai vienoje vietoje</p>
+          <h1 className="mt-4 max-w-2xl text-4xl font-semibold tracking-tight text-balance sm:text-5xl lg:text-6xl">
             Ramiau vykdykite paramos projektą.
           </h1>
           <p className="mt-5 max-w-xl text-lg leading-8 text-muted-foreground">
@@ -68,36 +72,24 @@ export default function WelcomePage({ programs }: { programs: Program[] }) {
           <ul className="mt-8 flex flex-wrap gap-x-6 gap-y-2 text-sm text-muted-foreground">
             {features.map(([Icon, text]) => (
               <li key={text} className="flex items-center gap-2">
-                <Icon className="size-4 text-primary" aria-hidden />
+                <Icon className="size-4" aria-hidden />
                 {text}
               </li>
             ))}
           </ul>
         </div>
 
-        {/* Product preview: what the user gets after uploading. */}
-        <div aria-hidden className="rounded-3xl bg-primary p-6 text-primary-foreground shadow-xl shadow-primary/15 sm:p-8">
-          <p className="text-2xl leading-8 font-semibold text-balance">Svarbūs terminai nepasimeta tarp dokumentų.</p>
-          <div className="mt-8 flex flex-col gap-3">
-            {[
-              ["2026-06-30", "Pateikti projekto ataskaitą", "w-2/3"],
-              ["2026-12-31", "Išlaikyti sukurtas darbo vietas", "w-1/3"],
-            ].map(([date, title, progress]) => (
-              <div key={title} className="rounded-2xl bg-white/10 p-4">
-                <div className="flex items-center justify-between gap-3 text-sm text-primary-foreground/75">
-                  <span className="flex items-center gap-1.5">
-                    <CalendarClock className="size-4" />
-                    Terminas
-                  </span>
-                  <span className="tabular-nums">{date}</span>
-                </div>
-                <p className="mt-2 font-medium">{title}</p>
-                <div className="mt-3 h-1.5 overflow-hidden rounded-full bg-white/20">
-                  <div className={`h-full rounded-full bg-white/80 ${progress}`} />
-                </div>
-              </div>
+        <div aria-hidden className="overflow-hidden rounded-2xl bg-card ring-1 ring-foreground/10">
+          <p className="border-b px-5 py-3 text-sm font-medium text-muted-foreground">Artėjantys terminai</p>
+          <ul className="divide-y">
+            {preview.map(([date, title, risk]) => (
+              <li key={title} className="flex flex-col gap-2 px-5 py-4 sm:flex-row sm:items-center sm:gap-4">
+                <span className="text-sm text-muted-foreground tabular-nums sm:w-24 sm:shrink-0">{date}</span>
+                <span className="flex-1 font-medium">{title}</span>
+                <RiskBadge risk={risk} />
+              </li>
             ))}
-          </div>
+          </ul>
         </div>
       </section>
 
@@ -108,7 +100,7 @@ export default function WelcomePage({ programs }: { programs: Program[] }) {
       >
         <div className="flex flex-col justify-between gap-3 sm:flex-row sm:items-end">
           <div>
-            <p className="text-sm font-medium text-primary">1 žingsnis</p>
+            <p className="text-sm font-medium text-muted-foreground">1 žingsnis</p>
             <h2 id="sector-heading" className="mt-1 text-2xl font-semibold tracking-tight">
               Kokia jūsų veiklos sritis?
             </h2>
@@ -124,11 +116,9 @@ export default function WelcomePage({ programs }: { programs: Program[] }) {
               type="button"
               aria-pressed={selected === title}
               onClick={() => setSelected(title)}
-              className="group flex items-start gap-4 rounded-xl border bg-card p-4 text-left transition-colors outline-none hover:border-primary/40 hover:bg-accent/40 focus-visible:ring-3 focus-visible:ring-ring/50 aria-pressed:border-primary aria-pressed:bg-accent"
+              className="group flex items-start gap-3 rounded-xl border bg-card p-4 text-left transition-colors outline-none hover:border-foreground/30 focus-visible:ring-3 focus-visible:ring-ring/50 aria-pressed:border-primary aria-pressed:bg-accent"
             >
-              <span className="grid size-10 shrink-0 place-items-center rounded-lg bg-accent text-primary transition-colors group-aria-pressed:bg-primary group-aria-pressed:text-primary-foreground">
-                <Icon className="size-5" aria-hidden />
-              </span>
+              <Icon className="mt-0.5 size-5 shrink-0 text-muted-foreground group-aria-pressed:text-foreground" aria-hidden />
               <span>
                 <span className="block font-medium">{title}</span>
                 <span className="mt-0.5 block text-sm leading-5 text-muted-foreground">{description}</span>
@@ -151,14 +141,10 @@ export default function WelcomePage({ programs }: { programs: Program[] }) {
 
       <section id="kaip-veikia" aria-label="Kaip tai veikia" className="py-12">
         <ol className="grid gap-4 sm:grid-cols-3">
-          {steps.map(([title, text, Icon], i) => (
-            <li key={title} className="rounded-2xl border bg-card/60 p-5">
-              <span className="grid size-10 place-items-center rounded-lg bg-accent text-primary">
-                <Icon className="size-5" aria-hidden />
-              </span>
-              <h2 className="mt-4 font-semibold">
-                {i + 1}. {title}
-              </h2>
+          {steps.map(([title, text], i) => (
+            <li key={title} className="border-t pt-5">
+              <p className="text-sm text-muted-foreground tabular-nums">0{i + 1}</p>
+              <h2 className="mt-2 font-semibold">{title}</h2>
               <p className="mt-1.5 text-sm leading-6 text-muted-foreground">{text}</p>
             </li>
           ))}
@@ -166,7 +152,7 @@ export default function WelcomePage({ programs }: { programs: Program[] }) {
       </section>
 
       <section ref={upload} id="sutartis" className="rounded-2xl bg-card p-6 ring-1 ring-foreground/10 sm:p-8">
-        <p className="text-sm font-medium text-primary">{selected ? `2 žingsnis · ${selected}` : "2 žingsnis"}</p>
+        <p className="text-sm font-medium text-muted-foreground">{selected ?`2 žingsnis · ${selected}` : "2 žingsnis"}</p>
         <h2 className="mt-1 text-2xl font-semibold tracking-tight">Įkelkite paramos sutartį</h2>
         <p className="mt-2 max-w-2xl leading-7 text-muted-foreground">
           AI suras svarbiausius terminus ir įsipareigojimus. Prieš išsaugant viską galėsite patikrinti bei pataisyti.
