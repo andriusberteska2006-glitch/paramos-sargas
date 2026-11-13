@@ -1,4 +1,4 @@
-import { DAY, DAYS_BEFORE, KEY, dayOf, esc, redis, reminderEntries, sendEmail, unsubscribeUrl } from "@/lib/reminders";
+import { DAY, DAYS_BEFORE, KEY, dayOf, emailButton, emailDeadlines, esc, redis, reminderEntries, sendEmail, unsubscribeUrl } from "@/lib/reminders";
 
 const isDate = (s: unknown): s is string => typeof s === "string" && /^\d{4}-\d{2}-\d{2}$/.test(s) && !isNaN(Date.parse(s));
 const text = (s: unknown, max: number) => (typeof s === "string" && s.trim() && s.length <= max ? s.trim() : "");
@@ -38,13 +38,13 @@ export async function POST(request: Request) {
     await redis("EXPIRE", limitKey, 86400);
 
     const origin = new URL(request.url).origin;
-    const list = upcoming.map((d) => `<li><b>${d.date}</b>: ${esc(d.title)}</li>`).join("");
     await sendEmail(
       email,
       `Priminimai užsakyti: ${programName}`,
-      `<p>Priminsime apie <b>${esc(programName)}</b> terminus likus ${DAYS_BEFORE.join(" ir ")} dienoms iki kiekvieno.</p>
-       <ul>${list}</ul>
-       <p><a href="${origin}/rezultatai?saltinis=dokumentas">Atidaryti Paramos sargą</a></p>`,
+      `<h1 style="margin:0 0 8px;font-size:20px;line-height:1.3">Priminimai užsakyti</h1>
+       <p style="margin:0">Priminsime apie <b>${esc(programName)}</b> terminus likus ${DAYS_BEFORE.join(" ir ")} dienoms iki kiekvieno.</p>
+       ${emailDeadlines(upcoming)}
+       ${emailButton(`${origin}/rezultatai?saltinis=dokumentas`, "Atidaryti Paramos sargą")}`,
       unsubscribeUrl(origin, email),
     );
     // Store only after the confirmation went out, so an unreachable address gets no silent reminders.

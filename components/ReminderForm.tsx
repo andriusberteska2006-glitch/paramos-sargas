@@ -1,6 +1,10 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
+import { LoaderCircle, Mail } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
 import type { Obligation } from "@/lib/types";
 
 export default function ReminderForm({ obligations, programName }: { obligations: Obligation[]; programName: string }) {
@@ -33,28 +37,31 @@ export default function ReminderForm({ obligations, programName }: { obligations
   }
 
   return (
-    <form onSubmit={submit} className="mt-4 flex flex-col gap-2 border-t border-gray-300 pt-4">
-      <label htmlFor="priminimu-pastas" className="font-semibold">
-        Priminimai el. paštu
-      </label>
-      <p className="text-sm">Laišką atsiųsime likus 30 ir 7 dienoms iki kiekvieno termino.</p>
-      <input
-        id="priminimu-pastas"
-        type="email"
-        name="email"
-        required
-        autoComplete="email"
-        placeholder="vardas@gmail.com"
-        className="rounded border border-gray-300 p-2"
-      />
-      <button type="submit" disabled={sending} className="rounded bg-blue-700 px-3 py-2 text-white disabled:opacity-50">
-        {sending ? "Siunčiama…" : "Gauti priminimus"}
-      </button>
-      {msg && (
-        <p role={msg.ok ? "status" : "alert"} className={`text-sm ${msg.ok ? "text-green-700" : "text-red-700"}`}>
-          {msg.text}
-        </p>
-      )}
-    </form>
+    <Card>
+      <CardHeader>
+        <CardTitle className="flex items-center gap-2">
+          <Mail className="size-4 text-primary" aria-hidden />
+          <h2>Priminimai el. paštu</h2>
+        </CardTitle>
+        <CardDescription>Laišką atsiųsime likus 30 ir 7 dienoms iki kiekvieno termino.</CardDescription>
+      </CardHeader>
+      <CardContent>
+        <form onSubmit={submit} className="flex flex-col gap-2">
+          <label htmlFor="priminimu-pastas" className="sr-only">
+            El. pašto adresas
+          </label>
+          <Input id="priminimu-pastas" type="email" name="email" required autoComplete="email" placeholder="vardas@gmail.com" />
+          <Button type="submit" disabled={sending} className="w-full">
+            {sending && <LoaderCircle className="animate-spin" aria-hidden />}
+            {sending ? "Siunčiama…" : "Gauti priminimus"}
+          </Button>
+          {msg && (
+            <p role={msg.ok ? "status" : "alert"} className={`text-sm ${msg.ok ? "text-primary" : "text-destructive"}`}>
+              {msg.text}
+            </p>
+          )}
+        </form>
+      </CardContent>
+    </Card>
   );
 }

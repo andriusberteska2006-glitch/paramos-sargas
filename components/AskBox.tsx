@@ -1,6 +1,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { FileText, LoaderCircle, MessageCircleQuestionMark, TriangleExclamationPoint } from "lucide-react";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Textarea } from "@/components/ui/textarea";
 import type { AskResponse, Program } from "@/lib/types";
 
 // Shown when the page was opened from a tag on the equipment (?zyma=...): the questions people ask standing next to it.
@@ -32,64 +37,81 @@ export default function AskBox({ programId, program }: { programId: string; prog
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ programId, question, program }),
       });
-      if (!res.ok) throw new Error();
-      setResult(await res.json());
-    } catch {
-      setError("Nepavyko gauti atsakymo. Bandykite dar kartą.");
+      const body = await res.json().catch(() => null);
+      if (!res.ok || !body) throw new Error(body?.error);
+      setResult(body);
+    } catch (err) {
+      setError(err instanceof Error && err.message ? err.message : "Nepavyko gauti atsakymo. Bandykite dar kartą.");
     } finally {
       setLoading(false);
     }
   }
 
   return (
-    <section className="flex flex-col gap-2">
-      <h2 className="text-lg font-semibold">Klauskite: „Ar galiu…?“</h2>
-      {fromTag && (
-        <div className="flex flex-wrap gap-2">
-          {TAG_QUESTIONS.map((q) => (
-            <button key={q} type="button" onClick={() => setQuestion(q)} className="rounded-full border border-blue-700 px-3 py-1 text-sm text-blue-700">
-              {q}
-            </button>
-          ))}
-        </div>
-      )}
-      <form onSubmit={onSubmit} className="flex flex-col gap-2">
-        <label htmlFor="ask-question" className="sr-only">Jūsų klausimas</label>
-        <textarea
-          id="ask-question"
-          value={question}
-          onChange={(e) => setQuestion(e.target.value)}
-          required
-          maxLength={2000}
-          placeholder="Pvz.: Ar galiu parduoti įrangą po 3 metų?"
-          className="rounded border border-gray-300 px-3 py-2"
-        />
-        <button type="submit" disabled={loading} className="self-start rounded bg-blue-700 px-4 py-2 text-white disabled:opacity-50">
-          {loading ? "Ieškoma…" : "Klausti"}
-        </button>
-      </form>
-      {error && <p role="alert" className="text-red-700">{error}</p>}
-      {result && (
-        <div aria-live="polite" className="rounded border border-gray-300 p-3">
-          <p>{result.answer}</p>
-          <ul className="mt-2 text-sm text-gray-600">
-            {result.sources.map((s, i) => {
-              const text = `Šaltinis: ${s.document}, ${s.page} psl., ${s.clause}`;
-              const anchor = `isipareigojimas-${s.obligationId}`;
-              // The card is missing when its condition doesn't apply to this user; show plain text then.
-              return (
-                <li key={i}>
-                  {document.getElementById(anchor) ? (
-                    <a href={`#${anchor}`} className="text-blue-700 underline hover:text-blue-900">{text}</a>
-                  ) : (
-                    text
-                  )}
-                </li>
-              );
-            })}
-          </ul>
-        </div>
-      )}
-    </section>
+    <Card>
+      <CardHeader>
+        <CardTitle className="flex items-center gap-2 text-lg">
+          <MessageCircleQuestionMark className="size-5 text-primary" aria-hidden />
+          <h2>Klauskite: „Ar galiu…?“</h2>
+        </CardTitle>
+        <CardDescription>Atsakymas remiasi tik jūsų programos taisyklėmis ir nurodo šaltinius.</CardDescription>
+      </CardHeader>
+      <CardContent className="flex flex-col gap-3">
+        {fromTag && (
+          <div className="flex flex-wrap gap-2">
+            {TAG_QUESTIONS.map((q) => (
+              <Button key={q} type="button" variant="outline" size="sm" onClick={() => setQuestion(q)} className="h-9 rounded-full">
+                {q}
+              </Button>
+            ))}
+          </div>
+        )}
+        <form onSubmit={onSubmit} className="flex flex-col gap-3">
+          <label htmlFor="ask-question" className="sr-only">Jūsų klausimas</label>
+          <Textarea
+            id="ask-question"
+            value={question}
+            onChange={(e) => setQuestion(e.target.value)}
+            required
+            maxLength={2000}
+            placeholder="Pvz.: Ar galiu parduoti įrangą po 3 metų?"
+          />
+          <Button type="submit" disabled={loading} className="self-start">
+            {loading && <LoaderCircle className="animate-spin" aria-hidden />}
+            {loading ? "Ieškoma…" : "Klausti"}
+          </Button>
+        </form>
+        {error && (
+          <Alert variant="destructive">
+            <TriangleExclamationPoint aria-hidden />
+            <AlertDescription>{error}</AlertDescription>
+          </Alert>
+        )}
+        {result && (
+          <div aria-live="polite" className="rounded-lg bg-muted p-4">
+            <p className="leading-relaxed whitespace-pre-line">{result.answer}</p>
+            {result.sources.length > 0 && (
+              <ul className="mt-3 flex flex-col gap-1 border-t pt-3 text-sm text-muted-foreground">
+                {result.sources.map((s, i) => {
+                  const text = `${s.document}, ${s.page} psl., ${s.clause}`;
+                  const anchor = `isipareigojimas-${s.obligationId}`;
+                  // The card is missing when its condition doesn't apply to this user; show plain text then.
+                  return (
+                    <li key={i} className="flex items-start gap-1.5">
+                      <FileText className="mt-0.5 size-3.5 shrink-0" aria-hidden />
+                      {document.getElementById(anchor) ? (
+                        <a href={`#${anchor}`} className="text-primary underline underline-offset-4 hover:text-primary/80">{text}</a>
+                      ) : (
+                        text
+                      )}
+                    </li>
+                  );
+                })}
+              </ul>
+            )}
+          </div>
+        )}
+      </CardContent>
+    </Card>
   );
 }

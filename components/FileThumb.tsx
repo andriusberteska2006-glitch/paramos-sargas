@@ -1,4 +1,6 @@
-// Preview of a proof file from its blob URL: images as <img>, PDFs in the browser's own viewer, other types nothing.
+import { FileText } from "lucide-react";
+
+// Preview of a proof file from its blob URL: images as <img>, PDFs in the browser's own viewer, other types a file icon.
 export default function FileThumb({ url, file, className }: { url: string; file: File; className: string }) {
   if (file.type.startsWith("image/")) {
     // eslint-disable-next-line @next/next/no-img-element -- blob URL, next/image cannot load it
@@ -16,5 +18,9 @@ export default function FileThumb({ url, file, className }: { url: string; file:
       />
     );
   }
-  return null;
+  return (
+    <span className={`${className} grid place-items-center text-muted-foreground`}>
+      <FileText className="size-8" aria-hidden />
+    </span>
+  );
 }

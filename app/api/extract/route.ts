@@ -96,7 +96,7 @@ export async function POST(request: Request) {
   const isPdf = file instanceof File && file.type === "application/pdf";
   const isImage = file instanceof File && (IMAGE_TYPES as readonly string[]).includes(file.type);
   if (!(file instanceof File) || !(isPdf || isImage) || file.size === 0 || file.size > MAX_BYTES) {
-    return Response.json({ error: "Įkelkite PDF, JPG arba PNG failą iki 4 MB" }, { status: 400 });
+    return Response.json({ error: "Įkelkite PDF, JPG arba PNG failą iki 4 MB." }, { status: 400 });
   }
 
   const data = Buffer.from(await file.arrayBuffer()).toString("base64");
@@ -120,7 +120,7 @@ export async function POST(request: Request) {
     });
     const text = res.content.find((b) => b.type === "text")?.text;
     if (res.stop_reason === "refusal" || res.stop_reason === "max_tokens" || !text) {
-      return Response.json({ error: "Nepavyko nuskaityti dokumento" }, { status: 502 });
+      return Response.json({ error: "Nepavyko nuskaityti dokumento. Bandykite dar kartą arba įkelkite aiškesnę kopiją." }, { status: 502 });
     }
     const x = JSON.parse(text);
 
@@ -148,6 +148,6 @@ export async function POST(request: Request) {
     return Response.json(result);
   } catch (e) {
     console.error("extract failed", e);
-    return Response.json({ error: "Nepavyko nuskaityti dokumento" }, { status: 502 });
+    return Response.json({ error: "Nepavyko nuskaityti dokumento. Bandykite dar kartą arba įkelkite aiškesnę kopiją." }, { status: 502 });
   }
 }

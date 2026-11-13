@@ -23,7 +23,7 @@ Lithuanian businesses that received EU/state grants often lose funding because t
 **All UI text is in Lithuanian.**
 
 ## Stack
-Next.js 16 App Router, React 19, TypeScript, Tailwind 4. Claude API (`ANTHROPIC_API_KEY`) and Resend (`RESEND_API_KEY`); email reminders also use Upstash Redis over REST (`KV_REST_API_URL`, `KV_REST_API_TOKEN`) and a daily Vercel Cron (`vercel.json`, `CRON_SECRET`); see `.env.example`, put real keys in `.env.local` (gitignored) and in Vercel env settings.
+Next.js 16 App Router, React 19, TypeScript, Tailwind 4, shadcn/ui (radix, Nova preset) with lucide-react icons. Theme tokens (green brand, risk colors) live in `app/globals.css`. Claude API (`ANTHROPIC_API_KEY`) and Resend (`RESEND_API_KEY`); email reminders also use Upstash Redis over REST (`KV_REST_API_URL`, `KV_REST_API_TOKEN`) and a daily Vercel Cron (`vercel.json`, `CRON_SECRET`); see `.env.example`, put real keys in `.env.local` (gitignored) and in Vercel env settings.
 
 ## Folder structure and owners
 | Path | What | Owner |
@@ -38,7 +38,8 @@ Next.js 16 App Router, React 19, TypeScript, Tailwind 4. Claude API (`ANTHROPIC_
 | `app/saugykla/page.tsx` | Proof vault: every uploaded proof with date, obligation, item, comment, file (`ProofVault`) | frontend |
 | `app/page.tsx` | Step 1: document upload or manual start (pick program) → same review/edit form (`DocumentUpload`) | frontend |
 | `app/rezultatai/page.tsx` | Step 2: timeline + checklist + ask box. Inputs come from the URL query | frontend |
-| `components/` | DocumentUpload, UploadedResults, Timeline, ObligationCard, EvidenceChecklist, ProofVault, FileThumb, ReminderForm, AskBox | frontend |
+| `components/` | WelcomePage, DocumentUpload, UploadedResults, ResultsHeader, Timeline, ObligationCard, RiskBadge, EvidenceChecklist, ProofVault, FileThumb, ReminderForm, AskBox | frontend |
+| `components/ui/` | shadcn/ui components, added with `npx shadcn@latest add <name>`. Sizes are tuned (40px+ controls, Lithuanian "Uždaryti"), so re-adding with `--overwrite` resets them | shared |
 | `app/api/ask/route.ts` | POST `{programId, question}` → `{answer, sources}` (Claude) | backend |
 | `app/api/remind/route.ts` | POST `{email, programName, deadlines: [{title, date}]}` → `{ok}`: confirmation email now, reminders 30 and 7 days before each deadline stored in Redis | backend |
 | `app/api/remind/atsisakyti/route.ts` | Unsubscribe link from every email (GET page with button, POST removes); also Gmail one-click | backend |
@@ -74,7 +75,7 @@ Obligation = ObligationTemplate & { dueDate, dates: string[] }  // dates are YYY
 - Program data lives only in JSON files in `/data`.
 - Checklist state lives in localStorage; always wrap access in try/catch.
 - Proof files live in IndexedDB (browser only, never sent to a server), see `lib/proofs.ts`.
-- No UI libraries; Tailwind only. Don't add dependencies without asking the team.
+- UI: shadcn/ui components from `components/ui` + Tailwind with the tokens in `app/globals.css` (`bg-primary`, `text-muted-foreground`, `text-risk-high`…), no hard-coded hex colors. Don't add other dependencies without asking the team.
 
 ## Team rule
 **Keep changes small and inside your own folder; do not refactor other people's code.** Changing `lib/types.ts` or `lib/obligations.ts` affects everyone: tell the team first and run the self-check and `npm run build`.

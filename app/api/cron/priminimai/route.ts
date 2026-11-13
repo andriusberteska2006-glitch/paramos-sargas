@@ -1,4 +1,4 @@
-import { DAY, KEY, dayOf, esc, redis, sendEmail, unsubscribeUrl, type Reminder } from "@/lib/reminders";
+import { DAY, KEY, dayOf, emailButton, emailDeadlines, redis, sendEmail, unsubscribeUrl, type Reminder } from "@/lib/reminders";
 
 // Daily Vercel Cron (vercel.json). Sends every reminder due today or earlier, one email per address.
 export async function GET(request: Request) {
@@ -23,14 +23,13 @@ export async function GET(request: Request) {
     try {
       if (items.length) {
         const left = (r: Reminder) => dayOf(r.d) - today;
-        const list = items
-          .map((r) => `<li><b>${r.d}</b> (liko ${left(r)} d.): ${esc(r.t)} <span style="color:#666">· ${esc(r.p)}</span></li>`)
-          .join("");
         await sendEmail(
           email,
           items.length === 1 ? `Liko ${left(items[0])} d.: ${items[0].t}` : `Artėjantys paramos terminai (${items.length})`,
-          `<p>Artėja jūsų paramos įsipareigojimų terminai:</p><ul>${list}</ul>
-           <p><a href="${origin}/rezultatai?saltinis=dokumentas">Atidaryti Paramos sargą</a></p>`,
+          `<h1 style="margin:0 0 8px;font-size:20px;line-height:1.3">Artėja paramos terminai</h1>
+           <p style="margin:0">Laikas pasiruošti šiems įsipareigojimams:</p>
+           ${emailDeadlines(items.map((r) => ({ date: r.d, title: r.t, note: `Liko ${left(r)} d. · ${r.p}` })))}
+           ${emailButton(`${origin}/rezultatai?saltinis=dokumentas`, "Atidaryti Paramos sargą")}`,
           unsubscribeUrl(origin, email),
         );
         sent++;

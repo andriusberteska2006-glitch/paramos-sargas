@@ -1,26 +1,93 @@
 @import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
 
-:root {
-  --background: #f7f8f4;
-  --foreground: #18352d;
-}
+/* Light only: dark: classes from shadcn stay off unless a .dark class is added. */
+@custom-variant dark (&:is(.dark *));
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --font-heading: var(--font-geist-sans);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --color-risk-high: var(--risk-high);
+  --color-risk-medium: var(--risk-medium);
+  --color-risk-low: var(--risk-low);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* Brand: the welcome page's deep green on near-white, with slightly green-tinted neutrals. */
+:root {
+  --background: #f8faf9;
+  --foreground: #17302a;
+  --card: #ffffff;
+  --card-foreground: #17302a;
+  --popover: #ffffff;
+  --popover-foreground: #17302a;
+  --primary: #1e6d59;
+  --primary-foreground: #ffffff;
+  --secondary: #eef3f0;
+  --secondary-foreground: #17302a;
+  --muted: #f1f5f3;
+  --muted-foreground: #5f746d;
+  --accent: #e6f3ed;
+  --accent-foreground: #155b49;
+  --destructive: #c62828;
+  --border: #e1e8e4;
+  --input: #d3ddd8;
+  --ring: #1e6d59;
+  --risk-high: #b91c1c;
+  --risk-medium: #b45309;
+  --risk-low: #15803d;
+  --radius: 0.75rem;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
   }
-}
-
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  html {
+    @apply font-sans;
+    color-scheme: light;
+    /* Anchor jumps and scrollIntoView land below the sticky site header. */
+    scroll-padding-top: 5rem;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+  ::selection {
+    @apply bg-accent text-accent-foreground;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
 }

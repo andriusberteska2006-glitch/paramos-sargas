@@ -1,7 +1,11 @@
 import Link from "next/link";
+import { ArrowLeft } from "lucide-react";
 import AskBox from "@/components/AskBox";
+import ResultsHeader from "@/components/ResultsHeader";
 import Timeline from "@/components/Timeline";
 import UploadedResults from "@/components/UploadedResults";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { computeObligations } from "@/lib/obligations";
 import { getProgram } from "@/lib/programs";
 import type { UserInputs } from "@/lib/types";
@@ -10,6 +14,17 @@ import type { UserInputs } from "@/lib/types";
 export const instant = false;
 
 const isDate =(s: string) => /^\d{4}-\d{2}-\d{2}$/.test(s) && !isNaN(Date.parse(s));
+
+const back = (label: string) => (
+  <Button asChild variant="ghost" size="sm" className="-ml-2 h-10 self-start text-muted-foreground">
+    <Link href="/">
+      <ArrowLeft aria-hidden />
+      {label}
+    </Link>
+  </Button>
+);
+
+const shell = "mx-auto flex w-full max-w-6xl flex-col gap-6 px-4 py-8 sm:px-6";
 
 export default async function ResultsPage({ searchParams }: PageProps<"/rezultatai">) {
   const q = await searchParams;
@@ -31,11 +46,8 @@ export default async function ResultsPage({ searchParams }: PageProps<"/rezultat
   };
   if (str("saltinis") === "dokumentas") {
     return (
-      <main className="mx-auto flex w-full max-w-5xl flex-col gap-6 p-4">
-        <nav className="flex flex-wrap justify-between gap-2">
-          <Link href="/" className="text-blue-700 underline">← Įkelti kitą dokumentą</Link>
-          <Link href="/saugykla" className="text-blue-700 underline">Įrodymų saugykla</Link>
-        </nav>
+      <main className={shell}>
+        {back("Įkelti kitą dokumentą")}
         <UploadedResults />
       </main>
     );
@@ -45,9 +57,18 @@ export default async function ResultsPage({ searchParams }: PageProps<"/rezultat
 
   if (!program || !isDate(inputs.contractSignedDate) || !isDate(inputs.projectEndDate)) {
     return (
-      <main className="mx-auto w-full max-w-2xl p-4">
-        <p className="mb-4">Trūksta duomenų arba jie neteisingi.</p>
-        <Link href="/" className="text-blue-700 underline">← Grįžti į formą</Link>
+      <main className="mx-auto w-full max-w-xl px-4 py-16 sm:px-6">
+        <Card>
+          <CardHeader>
+            <CardTitle><h1 className="text-lg">Trūksta duomenų arba jie neteisingi</h1></CardTitle>
+            <CardDescription>Grįžkite į pradžią ir įkelkite sutartį arba užpildykite duomenis rankiniu būdu.</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <Button asChild>
+              <Link href="/">Grįžti į pradžią</Link>
+            </Button>
+          </CardContent>
+        </Card>
       </main>
     );
   }
@@ -55,12 +76,9 @@ export default async function ResultsPage({ searchParams }: PageProps<"/rezultat
   const obligations = computeObligations(program, inputs);
 
   return (
-    <main className="mx-auto flex w-full max-w-5xl flex-col gap-6 p-4">
-      <nav className="flex flex-wrap justify-between gap-2">
-        <Link href="/" className="text-blue-700 underline">← Keisti duomenis</Link>
-        <Link href="/saugykla" className="text-blue-700 underline">Įrodymų saugykla</Link>
-      </nav>
-      <h1 className="text-2xl font-bold">{program.name}: jūsų įsipareigojimai</h1>
+    <main className={shell}>
+      {back("Keisti duomenis")}
+      <ResultsHeader program={program} inputs={inputs} count={obligations.length} />
       <Timeline obligations={obligations} programId={program.id} programName={program.name} glossary={program.glossary} docUrl={program.sourceDocUrl} />
       <AskBox programId={program.id} />
     </main>

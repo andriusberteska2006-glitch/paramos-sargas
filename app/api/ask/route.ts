@@ -7,13 +7,13 @@ export async function POST(request: Request) {
   const programId = body?.programId;
   const question = body?.question;
   if (typeof programId !== "string" || typeof question !== "string" || !question.trim() || question.length > 2000) {
-    return Response.json({ error: "Reikia programId ir klausimo" }, { status: 400 });
+    return Response.json({ error: "Įrašykite klausimą (iki 2000 simbolių)." }, { status: 400 });
   }
   // Programs from an uploaded document live only in the user's browser, so they come in the body.
   const sent = body?.program;
   const program: Program | undefined =
     getProgram(programId) ?? (typeof sent?.name === "string" && Array.isArray(sent?.obligations) ? sent : undefined);
-  if (!program) return Response.json({ error: "Programa nerasta" }, { status: 404 });
+  if (!program) return Response.json({ error: "Programa nerasta. Įkelkite dokumentą iš naujo." }, { status: 404 });
 
   const rules = program.obligations.map(({ id, title, plainExplanation, consequence, source }) => ({ id, title, plainExplanation, consequence, source }));
   try {
@@ -28,7 +28,7 @@ export async function POST(request: Request) {
       messages: [{ role: "user", content: `Programa: ${program.name} (${program.agency})\nTaisyklės (JSON):\n${JSON.stringify(rules)}\n\nKlausimas: ${question}` }],
     });
     const text = res.content.find((b) => b.type === "text")?.text;
-    if (res.stop_reason !== "end_turn" || !text) return Response.json({ error: "Nepavyko atsakyti" }, { status: 502 });
+    if (res.stop_reason !== "end_turn" || !text) return Response.json({ error: "Nepavyko gauti atsakymo. Bandykite dar kartą." }, { status: 502 });
     const x = JSON.parse(text) as { answer: string; ruleIds: string[] };
     // Only cite sources that really exist in the program data.
     const response: AskResponse = {
@@ -38,7 +38,7 @@ export async function POST(request: Request) {
     return Response.json(response);
   } catch (e) {
     console.error("ask failed", e);
-    return Response.json({ error: "Nepavyko atsakyti" }, { status: 502 });
+    return Response.json({ error: "Nepavyko gauti atsakymo. Bandykite dar kartą." }, { status: 502 });
   }
 }
 

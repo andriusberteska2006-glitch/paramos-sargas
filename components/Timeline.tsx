@@ -1,12 +1,15 @@
 "use client";
 
 import { useState } from "react";
+import { CalendarClock, Search } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
 import type { GlossaryTerm, Obligation, Risk } from "@/lib/types";
 import ObligationCard from "./ObligationCard";
 import ReminderForm from "./ReminderForm";
+import { riskDot } from "./RiskBadge";
 
 const rank: Record<Risk, number> = { high: 0, medium: 1, low: 2 };
-const dot: Record<Risk, string> = { high: "bg-red-500", medium: "bg-amber-500", low: "bg-green-500" };
 const MONTHS = ["sausis", "vasaris", "kovas", "balandis", "gegužė", "birželis", "liepa", "rugpjūtis", "rugsėjis", "spalis", "lapkritis", "gruodis"];
 
 const norm = (s: string) => s.normalize("NFD").replace(/\p{M}/gu, "").toLowerCase();
@@ -45,20 +48,25 @@ export default function Timeline({
     .slice(0, 12);
 
   return (
-    <div className="flex flex-col gap-6 md:grid md:grid-cols-[1fr_18rem]">
+    <div className="flex flex-col gap-6 lg:grid lg:grid-cols-[minmax(0,1fr)_20rem] lg:items-start">
       <div className="flex min-w-0 flex-col gap-4">
-        <input
-          type="search"
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-          aria-label="Ieškoti įsipareigojimų"
-          placeholder="Ieškoti, pvz. mokėjimai"
-          className="rounded border border-gray-300 p-2"
-        />
-        {shown.length === 0 && <p>Nieko nerasta pagal „{query}“.</p>}
+        <div className="relative">
+          <Search className="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground" aria-hidden />
+          <Input
+            type="search"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            aria-label="Ieškoti įsipareigojimų"
+            placeholder="Ieškoti, pvz. mokėjimai"
+            className="h-11 pl-9"
+          />
+        </div>
+        {shown.length === 0 && (
+          <p className="rounded-xl border border-dashed p-8 text-center text-muted-foreground">Nieko nerasta pagal „{query}“.</p>
+        )}
         <ol className="flex flex-col gap-4">
           {shown.map((o) => (
-            <li key={o.id} id={o.id} className="scroll-mt-4">
+            <li key={o.id} id={o.id}>
               <ObligationCard obligation={o} programId={programId} programName={programName} glossary={glossary} docUrl={docUrl} />
             </li>
           ))}
@@ -66,33 +74,42 @@ export default function Timeline({
       </div>
 
       {/* max-h + overflow: a sticky sidebar taller than the window could never be scrolled to its bottom */}
-      <aside className="order-first self-start rounded border border-gray-300 p-4 md:order-none md:sticky md:top-4 md:max-h-[calc(100vh-2rem)] md:overflow-y-auto">
-        <h2 className="mb-2 font-semibold">Artėjantys terminai</h2>
-        {upcoming.length === 0 ? (
-          <p className="text-sm">Artėjančių terminų nėra.</p>
-        ) : (
-          <ul className="flex flex-col gap-2 text-sm">
-            {upcoming.map(({ date, o }, i) => {
-              const month = date.slice(0, 7);
-              const newMonth = i === 0 || upcoming[i - 1].date.slice(0, 7) !== month;
-              return (
-                <li key={`${o.id}-${date}`}>
-                  {newMonth && (
-                    <p className="mt-2 font-medium">
-                      {date.slice(0, 4)} m. {MONTHS[Number(date.slice(5, 7)) - 1]}
-                    </p>
-                  )}
-                  <a href={`#${o.id}`} className="flex items-start gap-2 hover:underline">
-                    <span className={`mt-1.5 h-2 w-2 shrink-0 rounded-full ${dot[o.risk]}`} aria-hidden />
-                    <span>
-                      <span className="font-medium">{date.slice(8)} d.</span> {o.title}
-                    </span>
-                  </a>
-                </li>
-              );
-            })}
-          </ul>
-        )}
+      <aside className="order-first flex flex-col gap-4 lg:sticky lg:top-20 lg:order-none lg:max-h-[calc(100vh-6rem)] lg:overflow-y-auto">
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <CalendarClock className="size-4 text-primary" aria-hidden />
+              <h2>Artėjantys terminai</h2>
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            {upcoming.length === 0 ? (
+              <p className="text-sm text-muted-foreground">Artėjančių terminų nėra.</p>
+            ) : (
+              <ul className="flex flex-col text-sm">
+                {upcoming.map(({ date, o }, i) => {
+                  const month = date.slice(0, 7);
+                  const newMonth = i === 0 || upcoming[i - 1].date.slice(0, 7) !== month;
+                  return (
+                    <li key={`${o.id}-${date}`}>
+                      {newMonth && (
+                        <p className={`mb-1 text-xs font-medium text-muted-foreground ${i > 0 ? "mt-3" : ""}`}>
+                          {date.slice(0, 4)} m. {MONTHS[Number(date.slice(5, 7)) - 1]}
+                        </p>
+                      )}
+                      <a href={`#${o.id}`} className="-mx-2 flex items-start gap-2.5 rounded-md px-2 py-1.5 transition-colors hover:bg-muted">
+                        <span className={`mt-1.5 size-2 shrink-0 rounded-full ${riskDot[o.risk]}`} aria-hidden />
+                        <span>
+                          <span className="font-medium tabular-nums">{date.slice(8)} d.</span> {o.title}
+                        </span>
+                      </a>
+                    </li>
+                  );
+                })}
+              </ul>
+            )}
+          </CardContent>
+        </Card>
         <ReminderForm obligations={obligations} programName={programName} />
       </aside>
     </div>

@@ -2,11 +2,17 @@
 
 import { useEffect, useState, type FormEvent } from "react";
 import Link from "next/link";
+import { Paperclip, Plus, X } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Input } from "@/components/ui/input";
 import { deleteProof, listProofs, saveProof, type Proof } from "@/lib/proofs";
 import FileThumb from "./FileThumb";
 
 // image/* makes phones offer the photo gallery and camera; iOS also converts HEIC photos to JPEG for it.
 const ACCEPT = "image/*,application/pdf,.doc,.docx,.xls,.xlsx";
+
+const summary = "inline-flex min-h-10 cursor-pointer list-none items-center gap-1.5 rounded-md font-medium text-primary hover:text-primary/80 [&::-webkit-details-marker]:hidden";
 
 function FilePreview({ file }: { file: File }) {
   const [url, setUrl] = useState("");
@@ -17,10 +23,10 @@ function FilePreview({ file }: { file: File }) {
     return () => URL.revokeObjectURL(u);
   }, [file]);
   return (
-    <span className="flex items-center gap-2">
-      {url && <FileThumb url={url} file={file} className="h-40 w-32 shrink-0 rounded border border-gray-300 bg-white" />}
+    <span className="flex items-center gap-3">
+      {url && <FileThumb url={url} file={file} className="h-28 w-24 shrink-0 rounded-md border bg-muted" />}
       <span className="break-all">
-        {file.name} ({Math.ceil(file.size / 1024)} KB)
+        {file.name} <span className="text-muted-foreground">({Math.ceil(file.size / 1024)} KB)</span>
       </span>
     </span>
   );
@@ -31,28 +37,33 @@ function ProofList({ proofs, onRemove }: { proofs: Proof[]; onRemove: (p: Proof)
   if (!proofs.length) return null;
   return (
     <details onToggle={(e) => setOpen(e.currentTarget.open)}>
-      <summary className="cursor-pointer py-1 text-blue-700">Įrodymai ({proofs.length})</summary>
+      <summary className={summary}>
+        <Paperclip className="size-4" aria-hidden />
+        Įrodymai ({proofs.length})
+      </summary>
       {/* Previews mount only when opened, so the page does not load every photo and PDF at once. */}
       {open && (
-        <div className="mt-2 flex flex-col gap-2">
+        <div className="mt-1 flex flex-col gap-2">
           {proofs.map((p) => (
-            <div key={p.id} className="relative rounded border border-gray-300 bg-white hover:border-blue-700">
-              <Link href={`/saugykla#irodymas-${p.id}`} className="flex flex-col gap-1 p-2 pr-12">
+            <div key={p.id} className="relative rounded-lg border bg-card transition-colors hover:border-primary/40">
+              <Link href={`/saugykla#irodymas-${p.id}`} className="flex flex-col gap-1.5 rounded-lg p-2 pr-12">
                 <FilePreview file={p.file} />
-                <span className="text-gray-600">
+                <span className="text-muted-foreground">
                   Įkelta {new Date(p.savedAt).toLocaleDateString("lt-LT")}
                   {p.comment && ` · „${p.comment}“`}
                 </span>
               </Link>
-              <button
+              <Button
                 type="button"
+                variant="ghost"
+                size="icon"
                 onClick={() => onRemove(p)}
                 aria-label={`Ištrinti įrodymą ${p.file.name}`}
                 title="Ištrinti"
-                className="absolute right-1 top-1 flex h-10 w-10 items-center justify-center rounded-full text-2xl leading-none text-gray-600 hover:bg-red-100 hover:text-red-700"
+                className="absolute top-1 right-1 rounded-full text-muted-foreground hover:bg-destructive/10 hover:text-destructive"
               >
-                ×
-              </button>
+                <X aria-hidden />
+              </Button>
             </div>
           ))}
         </div>
@@ -76,37 +87,31 @@ function ProofForm({ existing, onSave }: { existing: Proof[]; onSave: (file: Fil
 
   return (
     <details className="w-full">
-      <summary className="cursor-pointer py-1 text-blue-700">
+      <summary className={summary}>
+        <Plus className="size-4" aria-hidden />
         {existing.length ? "Pridėti dar vieną įrodymą" : "Pridėti įrodymą"}
       </summary>
-      <form onSubmit={submit} className="mt-2 flex flex-col gap-2">
-        <input
+      <form onSubmit={submit} className="mt-1 flex flex-col gap-2 rounded-lg border bg-muted/30 p-3">
+        <Input
           type="file"
           name="file"
           accept={ACCEPT}
           required
           aria-label="Nuotrauka arba failas"
           onChange={(e) => setFile(e.target.files?.[0] ?? null)}
-          className="text-sm file:mr-3 file:rounded file:border-0 file:bg-blue-700 file:px-3 file:py-2 file:text-white"
+          className="cursor-pointer py-1"
         />
         {file && (
-          <div className="rounded border border-gray-300 bg-white p-2">
-            <p className="mb-1 text-gray-600">Pasirinkta:</p>
+          <div className="rounded-lg border bg-card p-2">
+            <p className="mb-1 text-muted-foreground">Pasirinkta:</p>
             <FilePreview file={file} />
           </div>
         )}
-        {duplicate && <p role="alert" className="text-amber-800">Šis failas jau įkeltas prie šio punkto.</p>}
-        <input
-          type="text"
-          name="comment"
-          maxLength={300}
-          placeholder="Trumpas komentaras (nebūtina)"
-          aria-label="Komentaras"
-          className="rounded border border-gray-300 bg-white p-2"
-        />
-        <button type="submit" className="self-start rounded bg-blue-700 px-3 py-1 text-white">
+        {duplicate && <p role="alert" className="text-risk-medium">Šis failas jau įkeltas prie šio punkto.</p>}
+        <Input type="text" name="comment" maxLength={300} placeholder="Trumpas komentaras (nebūtina)" aria-label="Komentaras" />
+        <Button type="submit" className="self-start">
           Išsaugoti
-        </button>
+        </Button>
       </form>
     </details>
   );
@@ -190,17 +195,18 @@ export default function EvidenceChecklist({
   }
 
   return (
-    <ul className="flex flex-col gap-2">
-      {error && <li role="alert" className="text-sm text-red-700">{error}</li>}
+    <ul className="flex flex-col gap-3">
+      {error && <li role="alert" className="text-sm text-destructive">{error}</li>}
       {items.map((item) => {
         const mine = proofs.filter((p) => p.item === item);
+        const done = checked.includes(item);
         return (
-          <li key={item} className="flex flex-col gap-1">
-            <label className="flex items-center gap-2">
-              <input type="checkbox" checked={checked.includes(item)} onChange={() => toggle(item)} />
-              {item}
+          <li key={item} className="flex flex-col gap-0.5">
+            <label className="flex min-h-8 cursor-pointer items-start gap-3 py-1 text-sm">
+              <Checkbox className="mt-px" checked={done} onCheckedChange={() => toggle(item)} />
+              <span className={done ? "text-muted-foreground line-through decoration-muted-foreground/60" : ""}>{item}</span>
             </label>
-            <div className="ml-6 flex flex-col gap-2 text-sm">
+            <div className="ml-[30px] flex flex-col text-sm">
               <ProofList proofs={mine} onRemove={removeProof} />
               <ProofForm existing={mine} onSave={(file, comment) => addProof(item, file, comment)} />
             </div>

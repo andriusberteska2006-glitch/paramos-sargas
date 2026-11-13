@@ -1,6 +1,6 @@
 // Self-check for reminderEntries and unsubscribe tokens. Run: node lib/reminders.check.ts
 import assert from "node:assert/strict";
-import { dayOf, reminderEntries, unsubscribeUrl, validToken, type Reminder } from "./reminders.ts";
+import { dayOf, emailButton, emailDeadlines, reminderEntries, unsubscribeUrl, validToken, type Reminder } from "./reminders.ts";
 
 const today = dayOf("2026-11-12");
 const run = (date: string) => reminderEntries("a@b.lt", "P", [{ title: "T", date }], today);
@@ -18,5 +18,10 @@ const token = new URL(unsubscribeUrl("https://x.lt", "a@b.lt")).searchParams.get
 assert.ok(validToken("a@b.lt", token));
 assert.ok(!validToken("kitas@b.lt", token));
 assert.ok(!validToken("a@b.lt", token.slice(1)));
+
+// User-typed titles and program names end up in email HTML: they must be escaped.
+const rows = emailDeadlines([{ date: "2026-12-31", title: "<img src=x>", note: "Liko 7 d. · <b>P</b>" }]);
+assert.ok(!rows.includes("<img") && !rows.includes("<b>P"));
+assert.ok(emailButton('https://x.lt/?a="b"', "Atidaryti").includes("&#34;b&#34;"));
 
 console.log("reminders.check: ok");
