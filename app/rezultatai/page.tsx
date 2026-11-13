@@ -79,8 +79,8 @@ export default async function ResultsPage({ searchParams }: PageProps<"/rezultat
     <main className={shell}>
       {back("Keisti duomenis")}
       <ResultsHeader program={program} inputs={inputs} count={obligations.length} />
-      <Timeline obligations={obligations} programId={program.id} programName={program.name} glossary={program.glossary} docUrl={program.sourceDocUrl} />
       <AskBox programId={program.id} />
+      <Timeline obligations={obligations} programId={program.id} programName={program.name} glossary={program.glossary} docUrl={program.sourceDocUrl} />
     </main>
   );
 }

@@ -58,8 +58,8 @@ export default function UploadedResults() {
   return (
     <>
       <ResultsHeader program={program} inputs={inputs} count={obligations.length} />
-      <Timeline obligations={obligations} programId={program.id} programName={program.name} glossary={program.glossary} docUrl={program.sourceDocUrl} />
       <AskBox programId={program.id} program={program} />
+      <Timeline obligations={obligations} programId={program.id} programName={program.name} glossary={program.glossary} docUrl={program.sourceDocUrl} />
     </>
   );
 }
