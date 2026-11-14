@@ -58,7 +58,7 @@ export default function UploadedResults() {
   const obligations = computeObligations(program, inputs);
   return (
     <>
-      <ResultsHeader program={program} inputs={inputs} count={obligations.length} />
+      <ResultsHeader program={program} inputs={inputs} obligations={obligations} />
       <Timeline obligations={obligations} programId={program.id} programName={program.name} glossary={program.glossary} docUrl={program.sourceDocUrl} />
       {/* Only the obligations that apply, with their computed dates, so answers can name exact deadlines. */}
       <AskBox programId={program.id} program={{ ...program, obligations }} />
